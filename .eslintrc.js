@@ -14,7 +14,19 @@ module.exports = {
   env: {
     browser: true
   },
-  rules: {
+  rules: { 
+    'ember/avoid-leaking-state-in-ember-objects': [2, [
+      'classNames',
+      'classNameBindings',
+      'actions',
+      'concatenatedProperties',
+      'mergedProperties',
+      'positionalParams',
+      'attributeBindings',
+      'queryParams',
+      'attrs',
+      'propTypes'
+    ]]
   },
   overrides: [
     // node files
