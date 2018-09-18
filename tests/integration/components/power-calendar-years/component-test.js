@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, triggerKeyEvent, click, focus } from '@ember/test-helpers';
+import { run } from '@ember/runloop';
 import hbs from 'htmlbars-inline-precompile';
 import { assertionInjector, assertionCleanup } from 'dummy/tests/assertions';
 
@@ -146,5 +147,34 @@ module('Integration | Component | power-calendar-years', function(hooks) {
     await triggerKeyEvent('.ember-power-calendar-selector-year[data-date="2016"]', 'keydown', 40); // down arrow
     assert.dom('.ember-power-calendar-selector-year[data-date="2016"]').hasClass('ember-power-calendar-selector-year--focused');
     assert.equal(document.activeElement, this.element.querySelector('.ember-power-calendar-selector-year[data-date="2016"]'));
+  });
+
+  test('If the user passes `disabledDates=someDate` to single calendars, years on those dates are disabled', async function(assert) {
+    assert.expect(8);
+    this.disabledDates = [
+      new Date(2015, 0),
+      new Date(2016, 0)
+    ];
+
+    await render(hbs`
+      {{#power-calendar selected=selected as |calendar|}}
+        {{power-calendar-years 
+          calendar=calendar 
+          onSelect=(action (mut selected) value="date")
+          disabledDates=disabledDates
+        }}
+      {{/power-calendar}}
+    `);
+
+    assert.dom('.ember-power-calendar-selector-year[data-date="2010"]').isNotDisabled('2010 is enabled');
+    assert.dom('.ember-power-calendar-selector-year[data-date="2014"]').isNotDisabled('2014 is enabled');
+    assert.dom('.ember-power-calendar-selector-year[data-date="2015"]').isDisabled('2015 is disabled');
+    assert.dom('.ember-power-calendar-selector-year[data-date="2016"]').isDisabled('2016 is disabled');
+
+    run(() => this.set('disabledDates', [new Date(2010, 0)]));
+    assert.dom('.ember-power-calendar-selector-year[data-date="2010"]').isDisabled('2010 is disabled');
+    assert.dom('.ember-power-calendar-selector-year[data-date="2014"]').isNotDisabled('2014 is enabled');
+    assert.dom('.ember-power-calendar-selector-year[data-date="2015"]').isNotDisabled('2015 is enabled');
+    assert.dom('.ember-power-calendar-selector-year[data-date="2016"]').isNotDisabled('2016 is enabled');
   });
 });
