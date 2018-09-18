@@ -2245,6 +2245,13 @@ ember-cli-broccoli-sane-watcher@^2.1.1:
     rsvp "^3.0.18"
     sane "^2.4.1"
 
+ember-cli-custom-assertions@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-custom-assertions/-/ember-cli-custom-assertions-0.1.0.tgz#99a38ae3aa3adf72057b916d841c92bbeaf8b95d"
+  dependencies:
+    ember-cli-babel "^6.6.0"
+    ember-cli-string-utils "^1.0.0"
+
 ember-cli-dependency-checker@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/ember-cli-dependency-checker/-/ember-cli-dependency-checker-3.0.0.tgz#61245f5f79f881dece043303111d5f41efb8621f"
@@ -2378,7 +2385,7 @@ ember-cli-sri@^2.1.1:
   dependencies:
     broccoli-sri-hash "^2.1.0"
 
-ember-cli-string-utils@^1.1.0:
+ember-cli-string-utils@^1.0.0, ember-cli-string-utils@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/ember-cli-string-utils/-/ember-cli-string-utils-1.1.0.tgz#39b677fc2805f55173735376fcef278eaa4452a1"
 

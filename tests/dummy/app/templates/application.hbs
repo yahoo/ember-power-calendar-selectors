@@ -1,0 +1,6 @@
+{{#power-calendar selected=selected as |calendar|}}
+  {{power-calendar-years/single
+    calendar=calendar
+    onSelect=(action (mut selected) value="date")
+  }}
+{{/power-calendar}}

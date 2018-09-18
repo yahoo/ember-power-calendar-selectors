@@ -1,0 +1,18 @@
+{{#if hasBlock}}
+  {{#component (concat "power-calendar-years/" type)
+    calendar=@calendar
+    format=@format
+    onSelect=@onSelect
+    onSelectYear=@onSelectYear
+    as |year calendar|
+  }}
+    {{yield year calendar}}
+  {{/component}}
+{{else}}
+  {{component (concat "power-calendar-years/" type)
+    calendar=@calendar
+    format=@format
+    onSelect=@onSelect
+    onSelectYear=@onSelectYear
+  }}
+{{/if}}
