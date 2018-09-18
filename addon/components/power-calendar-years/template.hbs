@@ -1,7 +1,10 @@
 {{#if hasBlock}}
   {{#component (concat "power-calendar-years/" type)
     calendar=@calendar
+    disabledDates=@disabledDates
     format=@format
+    maxDate=@maxDate
+    minDate=@minDate
     onSelect=@onSelect
     onSelectYear=@onSelectYear
     as |year calendar|
@@ -11,7 +14,10 @@
 {{else}}
   {{component (concat "power-calendar-years/" type)
     calendar=@calendar
+    disabledDates=@disabledDates
     format=@format
+    maxDate=@maxDate
+    minDate=@minDate
     onSelect=@onSelect
     onSelectYear=@onSelectYear
   }}
