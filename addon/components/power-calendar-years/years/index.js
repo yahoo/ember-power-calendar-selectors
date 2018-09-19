@@ -55,11 +55,8 @@ export default {
       if (focusedId) {
 
         // find the year
-        let year, idx;
-
-        for (idx = 0; idx < years.length; idx++) {
-          if (years[idx].id === focusedId) break;
-        }
+        const idx = years.findIndex(year => year.id === focusedId);
+        let year;
 
         // up arrow
         if (e.keyCode === 38) {
