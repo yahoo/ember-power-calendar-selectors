@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2018 Oath Inc.
+ */
+
 import { computed } from '@ember/object';
 import { scheduleOnce } from '@ember/runloop';
 import { assert } from '@ember/debug';

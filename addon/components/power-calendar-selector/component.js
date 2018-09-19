@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2018 Oath Inc.
+ */
+
 import Component from '@ember/component';
 import { scheduleOnce } from '@ember/runloop';
 import { inject } from '@ember/service';

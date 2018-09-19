@@ -1,8 +1,11 @@
+/**
+ * Copyright (c) 2018 Oath Inc.
+ */
+
 import Component from "@ember/component";
 import layout from './template';
 import { PropTypes } from 'ember-prop-types';
 import fallbackIfUndefined from 'ember-power-calendar/utils/computed-fallback-if-undefined';
-
 
 
 export default Component.extend({
