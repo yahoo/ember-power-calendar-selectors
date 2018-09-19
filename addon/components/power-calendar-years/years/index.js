@@ -2,8 +2,6 @@ import { computed } from '@ember/object';
 import { scheduleOnce } from '@ember/runloop';
 import { assert } from '@ember/debug';
 import layout from './template';
-import fallbackIfUndefined from 'ember-power-calendar/utils/computed-fallback-if-undefined';
-import { PropTypes } from 'ember-prop-types';
 
 import {
   add,
@@ -15,20 +13,17 @@ import {
 export default {
   classNames: ['ember-power-calendar-selector-years'],
 
-  propTypes: {
-    onSelectYear: PropTypes.func,
-  },
+  propTypes: {},
 
-  format: fallbackIfUndefined('YYYY'),
   layout,
   period: 'year',
 
   // CPs
   years: computed(
-    'calendar', 'focusedId', 'minDate', 'maxDate', 'disabledDates.[]', 
-    'maxLength', 'onSelect', 'onSelectYear', 
+    'focusedId',
+    'publicAPI.{calendar,onSelect,onSelectYear,maxLength,maxDate,minDate,disabledDates.[]}',
     function() {
-      const { calendar, period, powerCalendarService } = this;
+      const { publicAPI: { calendar }, period, powerCalendarService } = this;
       const thisYear = powerCalendarService.getDate();
       const lastYear = this.lastYear(calendar);
 
@@ -47,7 +42,7 @@ export default {
   // Actions
   actions: {
     selectYear(year, calendar, ev) {
-      const { onSelect, onSelectYear } = this;
+      const { onSelect, onSelectYear } = this.publicAPI;
 
       if (onSelectYear) onSelectYear(year, calendar, ev);
       if (onSelect) onSelect(year, calendar, ev);
@@ -118,7 +113,7 @@ export default {
 
   isDisabled(/*month*/) {
     const disabled = this._super(...arguments);
-    const { onSelect, onSelectYear } = this;
+    const { onSelect, onSelectYear } = this.publicAPI;
 
     return disabled || !onSelect && !onSelectYear;
   },

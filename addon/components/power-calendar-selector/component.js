@@ -1,8 +1,6 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { scheduleOnce } from '@ember/runloop';
 import { inject } from '@ember/service';
-import fallbackIfUndefined from 'ember-power-calendar/utils/computed-fallback-if-undefined';
 import { PropTypes } from 'ember-prop-types';
 
 
@@ -16,21 +14,14 @@ import {
 
 export default Component.extend({
   classNames: ['ember-power-calendar-selector'],
-  attributeBindings: ['data-power-calendar-id'],
   propTypes: {
-    calendar: PropTypes.object.isRequired,
-    format: PropTypes.string,
-    onSelect: PropTypes.func,
+    publicAPI: PropTypes.object.isRequired,
   },
 
   focusedId: null,
   period: 'none',
   powerCalendarService: inject('power-calendar'),
   rowWidth: 3,
-  format: fallbackIfUndefined('YYYY-MM-DD'),
-
-  // CPs
-  'data-power-calendar-id': computed.oneWay('calendar.uniqueId'),
 
   // Actions
   actions: {
@@ -59,7 +50,7 @@ export default Component.extend({
   },
 
   getPeriodId(date) {
-    const { format } = this;
+    const { publicAPI: { format } } = this;
 
     return formatDate(date, format);    
   },
@@ -72,12 +63,12 @@ export default Component.extend({
   },
 
   isDisabled(date) {
+    const { period } = this;
     const { 
       disabledDates,
       maxDate,
       minDate,
-      period,
-    } = this;
+    } = this.publicAPI;
 
     if (minDate && isBefore(date, minDate) && !isSame(date, minDate, period)) {
       return true;

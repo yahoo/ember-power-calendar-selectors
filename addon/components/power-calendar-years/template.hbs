@@ -1,24 +1,21 @@
-{{#if hasBlock}}
-  {{#component (concat "power-calendar-years/" type)
+{{#let  
+  (concat "power-calendar-years/" type) 
+  (hash 
     calendar=@calendar
     disabledDates=@disabledDates
-    format=@format
+    format=format
     maxDate=@maxDate
     minDate=@minDate
     onSelect=@onSelect
     onSelectYear=@onSelectYear
-    as |year calendar|
-  }}
-    {{yield year calendar}}
-  {{/component}}
-{{else}}
-  {{component (concat "power-calendar-years/" type)
-    calendar=@calendar
-    disabledDates=@disabledDates
-    format=@format
-    maxDate=@maxDate
-    minDate=@minDate
-    onSelect=@onSelect
-    onSelectYear=@onSelectYear
-  }}
-{{/if}}
+    type=type
+  )
+  as |componentName publicAPI|}}
+  {{#if hasBlock}}
+    {{#component componentName publicAPI=publicAPI as |year calendar|}}
+      {{yield year calendar}}
+    {{/component}}
+  {{else}}
+    {{component componentName publicAPI=publicAPI}}
+  {{/if}}
+{{/let}}
