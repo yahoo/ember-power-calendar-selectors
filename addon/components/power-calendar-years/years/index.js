@@ -16,13 +16,18 @@ import {
 
 export default {
   classNames: ['ember-power-calendar-selector-years'],
-
   propTypes: {},
-
   layout,
+
+  /**
+   * @property {String} period
+   * @override
+   */
   period: 'year',
 
-  // CPs
+  /**
+   * @property {Array} years
+   */
   years: computed(
     'focusedId',
     'publicAPI.{calendar,onSelect,onSelectYear,maxLength,maxDate,minDate,disabledDates.[]}',
@@ -43,8 +48,14 @@ export default {
     },
   ),
 
-  // Actions
   actions: {
+    /**
+     * @action selectYear - fired on year selection
+     * 
+     * @param {Object} year 
+     * @param {Object} calendar 
+     * @param {Event} ev 
+     */
     selectYear(year, calendar, ev) {
       const { onSelect, onSelectYear } = this.publicAPI;
 
@@ -53,7 +64,12 @@ export default {
       calendar.actions.select(year, calendar, ev);
     },
 
-    keyDown(calendar, e) {
+    /**
+     * @action keyDown - Handles arrow navigation with focus
+     * @param {Object} calendar 
+     * @param {Event} ev
+     */
+    keyDown(calendar, ev) {
       const { focusedId, rowWidth, years } = this;
 
       if (focusedId) {
@@ -63,8 +79,8 @@ export default {
         let year;
 
         // up arrow
-        if (e.keyCode === 38) {
-          e.preventDefault();
+        if (ev.keyCode === 38) {
+          ev.preventDefault();
           let newYearIdx = Math.max(idx - rowWidth, 0);
           for (let i = newYearIdx; i <= idx; i++) {
             year = years[i];
@@ -73,8 +89,8 @@ export default {
           }
         
         // down arrow
-        } else if (e.keyCode === 40) {
-          e.preventDefault();
+        } else if (ev.keyCode === 40) {
+          ev.preventDefault();
           let newYearIdx = Math.min(idx + rowWidth, years.length - 1);
           for (let i = newYearIdx; i >= idx; i--) {
             year = years[i];
@@ -83,12 +99,12 @@ export default {
           }
 
         // left arrow
-        } else if (e.keyCode === 37) {
+        } else if (ev.keyCode === 37) {
           year = years[Math.max(idx - 1, 0)];
           if (year.isDisabled) return;
 
         // right arrow
-        } else if (e.keyCode === 39) {
+        } else if (ev.keyCode === 39) {
           year = years[Math.min(idx + 1, years.length - 1)];
           if (year.isDisabled) return;
 
@@ -101,7 +117,14 @@ export default {
     }
   },
 
-  // Methods
+  /**
+   * @method buildPeriod
+   * @param {Date} date 
+   * @param {Date} thisYear 
+   * @param {Object} calendar 
+   * @returns {Boolean}
+   * @override
+   */
   buildPeriod(date, thisYear, calendar) {
     const year = this._super(...arguments);
     const { period } = this;
@@ -112,6 +135,12 @@ export default {
     });
   },
 
+  /**
+   * @method isDisabled
+   * @param {Date} month 
+   * @returns {Boolean}
+   * @override
+   */
   isDisabled(/*month*/) {
     const disabled = this._super(...arguments);
     const { onSelect, onSelectYear } = this.publicAPI;
@@ -119,18 +148,40 @@ export default {
     return disabled || !onSelect && !onSelectYear;
   },
 
+  /**
+   * Find the first year of the centered decade
+   * 
+   * @method firstYear
+   * @param {Object} calendar
+   * @returns {Date}
+   */
   firstYear(calendar) {
     assert("The center of the calendar is an invalid date.", !isNaN(calendar.center.getTime()));
 
     return new Date(this._getDecade(calendar.center) - 1, 0);
   },
 
+  /**
+   * Finds the last year of the centered decade
+   * 
+   * @method lastYear
+   * @param {Object} calendar 
+   * @returns {Date}
+   */
   lastYear(calendar) {
     assert("The center of the calendar is an invalid date.", !isNaN(calendar.center.getTime()));
 
     return new Date(this._getDecade(calendar.center) + 10, 0);
   },
 
+  /**
+   * Gets the decade of the date
+   * 
+   * @method _getDecade
+   * @param {Date} date 
+   * @returns {Number}
+   * @private
+   */
   _getDecade(date) {
     const year = date.getFullYear();
 

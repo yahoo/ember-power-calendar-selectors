@@ -142,9 +142,9 @@ export default Component.extend({
   /**
    * Updates the focused id
    * 
-   * @private
    * @method _updateFocused
    * @param {String} id 
+   * @private
    */
   _updateFocused(id) {
     this.set('focusedId', id);
@@ -155,6 +155,7 @@ export default Component.extend({
    * 
    * @method _focusDate
    * @param {String} id
+   * @private
    */
   _focusDate(id) {
     let el = this.element.querySelector(`[data-date="${id}"]`);
