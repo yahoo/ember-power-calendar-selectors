@@ -1,0 +1,1 @@
+export { default } from 'ember-power-calendar-selectors/components/power-calendar-years/multiple/component';
