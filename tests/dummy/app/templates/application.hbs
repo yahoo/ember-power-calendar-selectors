@@ -1,8 +1,8 @@
-{{#power-calendar selected=selected as |calendar|}}
+{{#power-calendar-multiple selected=selected as |calendar|}}
   {{power-calendar-years
     calendar=calendar
-    type="single"
-    format="YY"
+    type="multiple"
     onSelect=(action (mut selected) value="date")
+    maxLength=null
   }}
-{{/power-calendar}}
+{{/power-calendar-multiple}}

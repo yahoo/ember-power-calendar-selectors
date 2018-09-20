@@ -48,8 +48,9 @@ export default PowerCalendarSelector.extend({
    * @returns {Obejct}
    * @private
    */
-  _buildCollection({ date: selected = [] } = {}, { date }) {
+  _buildCollection({ date: _selected } = {}, { date }) {
     const { period } = this;
+    const selected = _selected || [];
     const index = selected.findIndex(s => isSame(date, s, period));
 
     let values = [];
