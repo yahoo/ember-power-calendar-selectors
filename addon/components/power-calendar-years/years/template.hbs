@@ -1,0 +1,31 @@
+{{!-- Copyright (c) 2018 Oath Inc. --}}
+
+{{! template-lint-disable invalid-interactive }}
+<div class="ember-power-calendar-selector-year-grid" onkeydown={{action "keyDown" @publicAPI.calendar}}>
+  {{#each years key="id" as |year|}}
+    <button
+      type="button"
+      data-date="{{year.id}}"
+      class="
+        ember-power-calendar-selector-year
+        {{if onSelect "ember-power-calendar-selector-year--interactive"}}
+        {{if year.isSelected "ember-power-calendar-selector-year--selected"}}
+        {{if year.isCurrentYear "ember-power-calendar-selector-year--current-year"}}
+        {{if year.isCurrentDecade "ember-power-calendar-selector-year--other-decade" "ember-power-calendar-selector-year--current-decade"}}
+        {{if year.isFocused "ember-power-calendar-selector-year--focused"}}
+        {{if year.isRangeStart "ember-power-calendar-selector-year--range-start"}}
+        {{if year.isRangeEnd "ember-power-calendar-selector-year--range-end"}}
+      "
+      onclick={{action "selectYear" year @publicAPI.calendar}}
+      onfocus={{action "focus" year}}
+      onblur={{action "blur"}}
+      disabled={{year.isDisabled}}>
+
+      {{#if hasBlock}}
+        {{yield year @publicAPI.calendar}}
+      {{else}}
+        {{power-calendar-format-date year.date @publicAPI.format locale=@publicAPI.calendar.locale}}
+      {{/if}}
+    </button>
+  {{/each}}
+</div>
