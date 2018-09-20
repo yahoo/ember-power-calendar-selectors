@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2018 Oath Inc.
+ */
+
 import { getProperties } from '@ember/object';
 import PowerCalendarSelector from '../component';
 
@@ -12,7 +16,14 @@ import {
 
 
 export default PowerCalendarSelector.extend({
-  // Methods
+  /**
+   * @method buildPeriod
+   * @param {Date} date 
+   * @param {Date} currentDate 
+   * @param {Object} calendar 
+   * @returns {Object}
+   * @override
+   */
   buildPeriod(date, currentDate, calendar) {
     const periodObj = this._super(...arguments);
     const { start, end } = getProperties(calendar.selected || { start: null, end: null }, 'start', 'end');
@@ -38,6 +49,13 @@ export default PowerCalendarSelector.extend({
     return periodObj;
   },
 
+  /**
+   * @method isSelected
+   * @param {Date} date 
+   * @param {Object} calendar 
+   * @returns {Boolean}
+   * @override
+   */
   isSelected(date, calendar = this.get('publicAPI.calendar')) {
     const { start, end } = getProperties(calendar.selected || { start: null, end: null }, 'start', 'end');
     const { period } = this;
@@ -67,6 +85,18 @@ export default PowerCalendarSelector.extend({
     return this._buildDefaultRange(periodObj, start, end);
   },
 
+  /**
+   * Builds a new period obj based on previous period obj 
+   * and new start and end dates.  The range selection logic
+   * is implemented here.
+   * 
+   * @method _buildRangeByProximity
+   * @param {Object} periodObj 
+   * @param {Date} start 
+   * @param {Date} end 
+   * @returns {Object}
+   * @private
+   */
   _buildRangeByProximity(periodObj, start, end) {
     if (start && end) {
       const changeStart = Math.abs(diff(periodObj.date, end)) > Math.abs(diff(periodObj.date, start));
@@ -86,6 +116,16 @@ export default PowerCalendarSelector.extend({
     return this._buildDefaultRange(periodObj, start, end);
   },
 
+  /**
+   * Builds a new default range.
+   * 
+   * @method _buildDefaultRange
+   * @param {Object} periodObj 
+   * @param {Date} start 
+   * @param {Date} end 
+   * @returns {Object}
+   * @private
+   */
   _buildDefaultRange(periodObj, start, end) {
     if (start && !end) {
       if (isAfter(start, periodObj.date)) {
