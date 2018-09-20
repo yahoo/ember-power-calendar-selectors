@@ -22,12 +22,26 @@ export default Component.extend({
     publicAPI: PropTypes.object.isRequired,
   },
 
+  /**
+   * @property {String} focusedId
+   */
   focusedId: null,
+
+  /**
+   * @property {String} period
+   */
   period: 'none',
+
+  /**
+   * @property {EmberService} powerCalendarService
+   */
   powerCalendarService: inject('power-calendar'),
+
+  /**
+   * @property {Number} rowWidth
+   */
   rowWidth: 3,
 
-  // Actions
   actions: {
     focus(year) {
       scheduleOnce('actions', this, this._updateFocused, year.id);
@@ -38,7 +52,15 @@ export default Component.extend({
     }
   },
 
-  // Methods
+  /**
+   * Used to construct the objects passed to callbacks
+   * 
+   * @method buildPeriod
+   * @param {Date} date 
+   * @param {Date} thisYear 
+   * @param {Object} calendar 
+   * @returns {Object}
+   */
   buildPeriod(date, thisYear, calendar) {
     const id = this.getPeriodId(date);
     const { period, focusedId } = this;
@@ -53,12 +75,27 @@ export default Component.extend({
     });
   },
 
+  /**
+   * Generates the id for the period from the start date
+   * 
+   * @method getPeriodId
+   * @param {Date} date 
+   * @returns {String}
+   */
   getPeriodId(date) {
     const { publicAPI: { format } } = this;
 
     return formatDate(date, format);    
   },
 
+  /**
+   * Determines if date is selected.
+   * 
+   * @method isSelected
+   * @param {Date} date 
+   * @param {Object} calendar 
+   * @returns {Boolean}
+   */
   isSelected(date, calendar = this.calendar) {
     const { period } = this;
     const { selected } = calendar;
@@ -66,6 +103,13 @@ export default Component.extend({
     return selected ? isSame(date, selected, period) : false;
   },
 
+  /**
+   * Determines if date is disabled.
+   * 
+   * @method isDisabled
+   * @param {Date} date 
+   * @returns {Boolean}
+   */
   isDisabled(date) {
     const { period } = this;
     const { 
@@ -95,10 +139,23 @@ export default Component.extend({
     return false;
   },
 
+  /**
+   * Updates the focused id
+   * 
+   * @private
+   * @method _updateFocused
+   * @param {String} id 
+   */
   _updateFocused(id) {
     this.set('focusedId', id);
   },
 
+  /**
+   * Updates the focused control
+   * 
+   * @method _focusDate
+   * @param {String} id
+   */
   _focusDate(id) {
     let el = this.element.querySelector(`[data-date="${id}"]`);
     if (el) {
