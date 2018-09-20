@@ -11,8 +11,17 @@ import fallbackIfUndefined from 'ember-power-calendar/utils/computed-fallback-if
 export default Component.extend({
   layout,
   tagName: '',
+
+  /**
+   * @property {String} type
+   */
   type: 'single',
+
+  /**
+   * @property {String} format
+   */
   format: fallbackIfUndefined('YYYY'),
+  
   propTypes: {
     calendar: PropTypes.object.isRequired,
     disabledDates: PropTypes.arrayOf(PropTypes.date),
