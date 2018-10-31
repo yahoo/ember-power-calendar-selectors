@@ -1,0 +1,230 @@
+
+.ember-power-calendar-selectors(
+  @cell-size: null,
+  @cell-width: @cell-size,
+  @cell-height: @cell-size,
+  @cell-with-spacing-width: @cell-width + 2px,
+  @row-padding-top: 0,
+  @row-padding-bottom: 0,
+  @row-padding-left: 0,
+  @row-padding-right: 0,
+  @row-width: @cell-with-spacing-width * 7 - 2px + @row-padding-left + @row-padding-right,
+  @primary-color: #0078c9,
+  @nav-button-color: @primary-color,
+  @nav-button-color--focus: lighten(@nav-button-color, 10%),
+  @now-background-color: #eee,
+  @default-background-color--hover: #eee,
+  @default-text-color: #bbb,
+  @centered-background-color: #F5F7FA,
+  @centered-text-color: #656D78,
+  @not-centered-text-color--hover: @centered-text-color,
+  @focus-shadow-color: @primary-color,
+  @range-bookend-color: lighten(@primary-color, 40%),
+  @range-start-background-color: @range-bookend-color,
+  @range-start-background-color--hover: @range-start-background-color,
+  @range-end-background-color: @range-bookend-color,
+  @range-end-background-color--hover: @range-end-background-color,
+  @selected-background-color: lighten(@primary-color, 50%),
+  @selected-background-color--hover: @selected-background-color,
+  @selected-text-color: #656D78,
+  @selected-text-color--hover: @selected-text-color
+) {
+  .ember-power-calendar-selector {
+    box-sizing: border-box;
+    position: relative;
+    font-size: 14px;
+    line-height: 1.42857;
+
+    width: @row-width;
+  
+    * {
+      box-sizing: border-box;
+    }
+
+    &-year {
+      -webkit-appearance: none;
+      align-items: center;
+      background-color: initial;
+      background-color: transparent;
+      border: initial;
+      border: none;
+      font-size: inherit;
+      justify-content: center;
+      outline: initial;
+      outline: none;
+      padding: 0;
+
+      color: @default-text-color;
+      height: @cell-height;
+      max-height: @cell-height;
+
+      &-grid {
+        display: grid;
+        grid-gap: 2px;
+        grid-template: auto auto auto auto / 1fr 1fr 1fr;
+        width: 100%;
+      }
+
+      &-cell {
+        -webkit-appearance: none;
+        flex: 1 1 100%;
+        padding: 0;
+        background-color: transparent;
+        background-color: initial;
+        border: none;
+        border: initial;
+        outline: none;
+        outline: initial;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        padding: 0;
+      }
+
+      &--current-decade {
+        color: @centered-text-color;
+        background-color: @centered-background-color;
+        
+        &:not([disabled]):hover {
+          color: @not-centered-text-color--hover;
+        }
+      }
+
+      &--current-year {
+        background-color: @centered-background-color;
+      }
+
+      &:not([disabled]):hover {
+        background-color: @default-background-color--hover;
+      }
+
+      &--selected {
+        font-weight: bold;
+
+        background-color: @selected-background-color;
+        color: @selected-text-color;
+        
+        &.ember-power-calendar-year {
+          &--range-start {
+            background-color: @range-start-background-color;
+
+            &:hover {
+              background-color: @range-start-background-color--hover;
+            }
+          }
+
+          &--range-end {
+            background-color: @range-end-background-color;
+
+            &:hover {
+              background-color: @range-end-background-color--hover;
+            }
+          }
+        }
+
+        &:not([disabled]):hover {
+          background-color: @selected-background-color;
+          color: @selected-text-color;
+        }
+      }
+
+      &--interactive[disabled] {
+        opacity: 0.4;
+      }
+
+      &--focused {
+        box-shadow: inset 0px -2px 0px 0px @focus-shadow-color;
+      }
+    }
+  
+    &-quarters {
+      flex: 0 0 auto;
+      max-width: @cell-width;
+      width: @cell-width;
+      margin-right: 2px;
+    }
+
+    &-quarter {
+      -webkit-appearance: none;
+      background-color: transparent;
+      background-color: initial;
+      border: none;
+      border: initial;
+      outline: none;
+      outline: initial;
+      width: 100%;
+      font-size: inherit;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      
+      background-color: @default-background-color--hover;
+      color: @centered-text-color;
+      height: @cell-height;
+      line-height: @cell-height;
+      margin-bottom: 2px;
+      max-height: @cell-height;
+      text-align: center;
+  
+      &:last-child {
+        margin-bottom: 0px;
+      }
+  
+      &.ember-power-calendar-quarter--interactive:hover {
+        background-color: @centered-background-color;
+      }
+  
+      &--selected {
+        font-weight: bold;
+        background-color: @selected-background-color;
+        color: @selected-text-color;
+  
+        &:not([disabled]):hover {
+          background-color: @selected-background-color;
+          color: @selected-text-color;
+        }
+      }
+  
+      &--interactive[disabled] {
+        opacity: 0.4;
+      }
+
+      &:not([disabled]):hover {
+        background-color: @selected-background-color;
+        color: @selected-text-color;
+      }
+    }
+  
+    &-nav {
+      box-sizing: border-box;
+      display: flex;
+      justify-content: space-between;
+      line-height: 2;
+
+      &-title {
+        flex: 1;
+        text-align: center;
+      }
+
+      &-control {
+        -webkit-appearance: none;
+        background-color: transparent;
+        background-color: initial;
+        border: none;
+        border: initial;
+        outline: none;
+        outline: initial;
+        font-size: inherit;
+        line-height: 1;
+        font-size: 150%;
+
+        color: @nav-button-color;
+
+        &:focus {
+          color: lighten(@nav-button-color--focus, 10%);
+          transform: scale(1.2);
+        }
+      }
+    }
+  }
+}
