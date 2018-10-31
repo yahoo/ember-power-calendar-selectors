@@ -20,6 +20,8 @@ export default PowerCalendarSelectorRange.extend(Years).extend({
         onSelectYear, onSelect 
       } } = this;
 
+      console.log(year.date)
+
       // Call onSelect of parent if it exists
       calendar.actions.select(year, calendar, ev);
 
@@ -27,6 +29,7 @@ export default PowerCalendarSelectorRange.extend(Years).extend({
       if (onSelectYear || onSelect) {
         // Compute range
         const range = this._buildRange(year);
+        console.log(range.date)
         const { start, end } = range.date;
   
         if (start && end) {
