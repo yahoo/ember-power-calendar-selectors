@@ -69,13 +69,13 @@ export default PowerCalendarSelector.extend({
 
   _buildRange(periodObj) {
     const {
-      publicAPI: {
+      publicAPI: { calendar: {
         selected: {
           start = null,
           end = null,
         } = {},
         proximitySelection,
-      }
+      } }
     } = this;
 
     if (proximitySelection) {
