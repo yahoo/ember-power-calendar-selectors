@@ -14,17 +14,23 @@ import {
   normalizeRangeActionValue,
 } from 'ember-power-calendar-utils';
 
-
+/**
+ * Range selector component abstract class.  Implements
+ * basic range selection logic.
+ * 
+ * @class
+ * @extends PowerCalendarSelector
+ */
 export default PowerCalendarSelector.extend({
   /**
    * @method buildPeriod
    * @param {Date} date 
-   * @param {Date} currentDate 
+   * @param {Date} now 
    * @param {Object} calendar 
    * @returns {Object}
    * @override
    */
-  buildPeriod(date, currentDate, calendar) {
+  buildPeriod(date, now, calendar) {
     const periodObj = this._super(...arguments);
     const { start, end } = getProperties(calendar.selected || { start: null, end: null }, 'start', 'end');
     const { period } = this;
@@ -47,6 +53,30 @@ export default PowerCalendarSelector.extend({
     }
 
     return periodObj;
+  },
+
+  /**
+   * Should date be disabled?
+   * 
+   * @method isDisabled
+   * @param {Date} date 
+   * @returns {Boolean}
+   */
+  isDisabled(date) {
+    const { publicAPI: { calendar } } = this;
+    const range = this._buildRange({ date });
+    const { start, end } = range.date;
+
+    if (start && end) {
+      const { minRange, maxRange } = calendar;
+      const diffInMs = Math.abs(diff(end, start));
+
+      if (diffInMs < minRange || maxRange && diffInMs > maxRange) {
+        return true;
+      }
+    }
+
+    return this._super(date);
   },
 
   /**

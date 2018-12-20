@@ -1,8 +1,9 @@
-{{#power-calendar-range selected=selected as |calendar|}}
-  {{power-calendar-years
-    calendar=calendar
-    type="range"
-    onSelect=(action (mut selected) value="date")
-    maxLength=null
-  }}
+{{#power-calendar-range
+  onSelect=(action (mut selected) value="date") 
+  selected=selected 
+  minRange=500
+  maxRange=800
+as |calendar|
+}}
+  {{power-calendar-years calendar=calendar}}
 {{/power-calendar-range}}

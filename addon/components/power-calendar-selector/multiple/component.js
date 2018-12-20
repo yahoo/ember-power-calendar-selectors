@@ -6,6 +6,13 @@ import fallbackIfUndefined from 'ember-power-calendar/utils/computed-fallback-if
 import { isSame, normalizeMultipleActionValue } from 'ember-power-calendar-utils';
 import PowerCalendarSelector from '../component';
 
+/**
+ * Multiple selector component abstract class.  Implements
+ * basic multiple selection logic.
+ * 
+ * @class
+ * @extends PowerCalendarSelector
+ */
 export default PowerCalendarSelector.extend({
   /**
    * @property {Number}

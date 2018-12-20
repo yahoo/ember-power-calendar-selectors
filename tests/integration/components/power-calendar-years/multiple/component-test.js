@@ -19,7 +19,8 @@ module('Integration | Component | power-calendar-years/multiple', function(hooks
       actions: {
         moveCenter: () => {},
         select: () => {},
-      }
+      },
+      type: 'multiple'
     };
   });
 
@@ -47,12 +48,11 @@ module('Integration | Component | power-calendar-years/multiple', function(hooks
     this.set('center', center);
 
     await render(hbs`
-      {{#power-calendar-multiple selected=collection center=center as |calendar|}}
+      {{#power-calendar-multiple onSelect=(action (mut collection) value="date") selected=collection center=center as |calendar|}}
         {{power-calendar-years/multiple publicAPI=(hash
           calendar=calendar
           format="YYYY"
           maxLength=1
-          onSelect=(action (mut collection) value="date")
         )}}
       {{/power-calendar-multiple}}
     `);
@@ -71,12 +71,11 @@ module('Integration | Component | power-calendar-years/multiple', function(hooks
     this.set('center', center);
 
     await render(hbs`
-      {{#power-calendar-multiple selected=collection center=center as |calendar|}}
+      {{#power-calendar-multiple onSelect=(action (mut collection) value="date") selected=collection center=center as |calendar|}}
         {{power-calendar-years/multiple publicAPI=(hash
           calendar=calendar
           format="YYYY"
           maxLength=max
-          onSelect=(action (mut collection) value="date")
         )}}
       {{/power-calendar-multiple}}
     `);
@@ -94,12 +93,11 @@ module('Integration | Component | power-calendar-years/multiple', function(hooks
     this.set('center', center);
 
     await render(hbs`
-      {{#power-calendar-multiple selected=collection center=center as |calendar|}}
+      {{#power-calendar-multiple onSelect=(action (mut collection) value="date") selected=collection center=center as |calendar|}}
         {{power-calendar-years/multiple publicAPI=(hash
           calendar=calendar
           format="YYYY"
           maxLength=1
-          onSelect=(action (mut collection) value="date")
         )}}
       {{/power-calendar-multiple}}
     `);
@@ -114,12 +112,11 @@ module('Integration | Component | power-calendar-years/multiple', function(hooks
     this.set('center', center);
 
     await render(hbs`
-      {{#power-calendar-multiple selected=collection center=center as |calendar|}}
+      {{#power-calendar-multiple onSelect=(action (mut collection) value="date") selected=collection center=center as |calendar|}}
         {{power-calendar-years/multiple publicAPI=(hash
           calendar=calendar
           format="YYYY"
           maxLength=max
-          onSelect=(action (mut collection) value="date")
         )}}
       {{/power-calendar-multiple}}
     `);

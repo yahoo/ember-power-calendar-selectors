@@ -8,7 +8,7 @@
       data-date="{{year.id}}"
       class="
         ember-power-calendar-selector-year
-        {{if onSelect "ember-power-calendar-selector-year--interactive"}}
+        {{if _interactive "ember-power-calendar-selector-year--interactive"}}
         {{if year.isSelected "ember-power-calendar-selector-year--selected"}}
         {{if year.isCurrentYear "ember-power-calendar-selector-year--current-year"}}
         {{if year.isCurrentDecade "ember-power-calendar-selector-year--other-decade" "ember-power-calendar-selector-year--current-decade"}}
@@ -19,7 +19,7 @@
       onclick={{action "selectYear" year @publicAPI.calendar}}
       onfocus={{action "focus" year}}
       onblur={{action "blur"}}
-      disabled={{year.isDisabled}}>
+      disabled={{or (not _interactive) year.isDisabled}}>
 
       {{#if hasBlock}}
         {{yield year @publicAPI.calendar}}

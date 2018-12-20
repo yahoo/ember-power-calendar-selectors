@@ -4,8 +4,14 @@
 
 import PowerCalendarSelectorRange from 'ember-power-calendar-selectors/components/power-calendar-selector/range/component'
 import Years from '../years';
-import { diff } from 'ember-power-calendar-utils';
 
+/**
+ * Years range selection component concrete class.
+ * 
+ * @class
+ * @extends PowerCalendarSelectorRange
+ * @mixes Years
+ */
 export default PowerCalendarSelectorRange.extend(Years).extend({
   actions: {
     /**
@@ -16,31 +22,13 @@ export default PowerCalendarSelectorRange.extend(Years).extend({
      * @override
      */
     selectYear(year, calendar, ev) {
-      const { publicAPI: { 
-        onSelectYear, onSelect 
-      } } = this;
+      const { publicAPI: { onSelectYear } } = this;
+      const { actions: { select } } = calendar;
 
-      // Call onSelect of parent if it exists
-      calendar.actions.select(year, calendar, ev);
-
-      // Call onSelectYear if it exists
-      if (onSelectYear || onSelect) {
-        // Compute range
-        const range = this._buildRange(year);
-        const { start, end } = range.date;
-  
-        if (start && end) {
-          const { minRange, maxRange } = calendar;
-          const diffInMs = Math.abs(diff(end, start));
-  
-          if (diffInMs < minRange || maxRange && diffInMs > maxRange) {
-            return;
-          }
-        }
-
-        if (onSelectYear) onSelectYear(range, calendar, ev);
-        if (onSelect) onSelect(range, calendar, ev);
-      }
+      if (onSelectYear)
+        onSelectYear(this._buildRange(year), calendar, ev);
+      else if (select)
+        select(year, calendar, ev);
     },
   },
 });

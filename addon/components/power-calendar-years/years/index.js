@@ -14,6 +14,12 @@ import {
 } from 'ember-power-calendar-utils';
 
 
+/**
+ * Provides years logic to selector abstract component
+ * classes.
+ * 
+ * @mixin Years
+ */
 export default {
   classNames: ['ember-power-calendar-selector-years'],
   propTypes: {},
@@ -48,20 +54,28 @@ export default {
     },
   ),
 
+  /**
+   * Should years be interactive?
+   * @property {Boolean} _yearsInteractive
+   */
+  _interactive: computed.or('publicAPI.{onSelectYear,calendar.actions.select}'),
+
   actions: {
     /**
      * @action selectYear - fired on year selection
      * 
-     * @param {Object} year 
-     * @param {Object} calendar 
-     * @param {Event} ev 
+     * @param {Object} year
+     * @param {Object} calendar
+     * @param {Event} ev
      */
     selectYear(year, calendar, ev) {
-      const { onSelect, onSelectYear } = this.publicAPI;
+      const { onSelectYear } = this.publicAPI;
+      const { actions: { select } } = calendar;
 
-      if (onSelectYear) onSelectYear(year, calendar, ev);
-      if (onSelect) onSelect(year, calendar, ev);
-      calendar.actions.select(year, calendar, ev);
+      if (onSelectYear)
+        onSelectYear(year, calendar, ev);
+      else if (select)
+        select(year, calendar, ev);
     },
 
     /**
@@ -133,19 +147,6 @@ export default {
       isCurrentYear: isSame(date, thisYear, period),
       isCurrentDecade: this._getDecade(date) !== this._getDecade(calendar.center),
     });
-  },
-
-  /**
-   * @method isDisabled
-   * @param {Date} month 
-   * @returns {Boolean}
-   * @override
-   */
-  isDisabled(/*month*/) {
-    const disabled = this._super(...arguments);
-    const { onSelect, onSelectYear } = this.publicAPI;
-
-    return disabled || !onSelect && !onSelectYear;
   },
 
   /**

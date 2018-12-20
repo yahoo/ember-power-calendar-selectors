@@ -19,7 +19,8 @@ module('Integration | Component | power-calendar-years', function(hooks) {
       actions: {
         moveCenter: () => {},
         select: () => {},
-      }
+      },
+      type: 'single'
     };
   });
 
@@ -46,12 +47,9 @@ module('Integration | Component | power-calendar-years', function(hooks) {
       assert.equal(year.id, '2013', 'id matches clicked element');
     });
     await render(hbs`
-      {{#power-calendar as |calendar|}}
+      {{#power-calendar onSelect=(action didChange) as |calendar|}}
         {{calendar.nav}}
-        {{power-calendar-years 
-          calendar=calendar
-          onSelect=(action didChange)
-        }}
+        {{power-calendar-years calendar=calendar}}
       {{/power-calendar}}
     `);
     await click('.ember-power-calendar-selector-year[data-date="2013"]');
@@ -61,13 +59,9 @@ module('Integration | Component | power-calendar-years', function(hooks) {
     assert.expect(4);
     this.minDate = new Date(2016, 0);
     await render(hbs`
-      {{#power-calendar selected=selected as |calendar|}}
+      {{#power-calendar onSelect=(action (mut selected) value="date") selected=selected as |calendar|}}
         {{calendar.nav}}
-        {{power-calendar-years
-          onSelect=(action (mut selected) value="date") 
-          calendar=calendar 
-          minDate=minDate
-        }}
+        {{power-calendar-years calendar=calendar minDate=minDate}}
       {{/power-calendar}}
     `);
 
@@ -86,11 +80,7 @@ module('Integration | Component | power-calendar-years', function(hooks) {
     await render(hbs`
       {{#power-calendar selected=selected onSelect=(action (mut selected) value="date") as |calendar|}}
         {{calendar.nav}}
-        {{power-calendar-years
-          onSelect=(action (mut selected) value="date") 
-          calendar=calendar 
-          minDate=minDate
-        }}
+        {{power-calendar-years calendar=calendar minDate=minDate}}
       {{/power-calendar}}
     `);
 
@@ -109,11 +99,7 @@ module('Integration | Component | power-calendar-years', function(hooks) {
     await render(hbs`
       {{#power-calendar selected=selected onSelect=(action (mut selected) value="date") as |calendar|}}
         {{calendar.nav}}
-        {{power-calendar-years
-          onSelect=(action (mut selected) value="date") 
-          calendar=calendar 
-          maxDate=maxDate
-        }}
+        {{power-calendar-years calendar=calendar maxDate=maxDate}}
       {{/power-calendar}}
     `);
 
@@ -130,13 +116,9 @@ module('Integration | Component | power-calendar-years', function(hooks) {
     assert.expect(4);
     this.maxDate = new Date(2016, 0);
     await render(hbs`
-      {{#power-calendar selected=selected as |calendar|}}
+      {{#power-calendar onSelect=(action (mut selected) value="date") selected=selected as |calendar|}}
         {{calendar.nav}}
-        {{power-calendar-years 
-          onSelect=(action (mut selected) value="date") 
-          calendar=calendar 
-          maxDate=maxDate
-        }}
+        {{power-calendar-years calendar=calendar maxDate=maxDate}}
       {{/power-calendar}}
     `);
 
@@ -157,12 +139,8 @@ module('Integration | Component | power-calendar-years', function(hooks) {
     ];
 
     await render(hbs`
-      {{#power-calendar selected=selected as |calendar|}}
-        {{power-calendar-years 
-          calendar=calendar 
-          onSelect=(action (mut selected) value="date")
-          disabledDates=disabledDates
-        }}
+      {{#power-calendar onSelect=(action (mut selected) value="date") selected=selected as |calendar|}}
+        {{power-calendar-years calendar=calendar disabledDates=disabledDates}}
       {{/power-calendar}}
     `);
 

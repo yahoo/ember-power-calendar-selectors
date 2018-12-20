@@ -5,6 +5,13 @@
 import PowerCalendarSelectorMultiple from 'ember-power-calendar-selectors/components/power-calendar-selector/multiple/component'
 import Years from '../years';
 
+/**
+ * Years multiple selection component concrete class.
+ * 
+ * @class
+ * @extends PowerCalendarSelectorMultiple
+ * @mixes Years
+ */
 export default PowerCalendarSelectorMultiple.extend(Years).extend({
   actions: {
     /**
@@ -15,18 +22,13 @@ export default PowerCalendarSelectorMultiple.extend(Years).extend({
      * @override
      */
     selectYear(year, calendar, ev) {
-      const { publicAPI: {
-        onSelect, 
-        onSelectYear,
-        calendar: { selected }
-      } } = this;
+      const { publicAPI: { onSelectYear } } = this;
+      const { selected, actions: { select } } = calendar;
 
-      const nextRange = this._buildCollection({ date: selected }, year);
-
-      if (onSelectYear) onSelectYear(nextRange, calendar, ev);
-      if (onSelect) onSelect(nextRange, calendar, ev);
-  
-      calendar.actions.select(year, calendar, ev);
+      if (onSelectYear) 
+        onSelectYear(this._buildCollection({ date: selected }, year), calendar, ev);
+      else if (select)
+        select(year, calendar, ev);
     },
-  }
+  },
 });

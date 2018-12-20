@@ -7,7 +7,6 @@ import { scheduleOnce } from '@ember/runloop';
 import { inject } from '@ember/service';
 import { PropTypes } from 'ember-prop-types';
 
-
 import {
   formatDate,
   isAfter,
@@ -16,6 +15,14 @@ import {
   normalizeCalendarDay
 } from 'ember-power-calendar-utils';
 
+
+/**
+ * Base selector component abstract class. Implements 
+ * basic single selection logic.
+ * 
+ * @class
+ * @extends Component
+ */
 export default Component.extend({
   classNames: ['ember-power-calendar-selector'],
   propTypes: {
@@ -43,10 +50,21 @@ export default Component.extend({
   rowWidth: 3,
 
   actions: {
+    /**
+     * Action run on year focus.
+     * 
+     * @action
+     * @param {Object} year - selected dateObj
+     */
     focus(year) {
       scheduleOnce('actions', this, this._updateFocused, year.id);
     },
 
+    /**
+     * Action run on component blue.
+     * 
+     * @action
+     */
     blur() {
       scheduleOnce('actions', this, this._updateFocused, null);
     }
@@ -57,11 +75,11 @@ export default Component.extend({
    * 
    * @method buildPeriod
    * @param {Date} date 
-   * @param {Date} thisYear 
+   * @param {Date} now 
    * @param {Object} calendar 
    * @returns {Object}
    */
-  buildPeriod(date, thisYear, calendar) {
+  buildPeriod(date, now, calendar) {
     const id = this.getPeriodId(date);
     const { period, focusedId } = this;
 
