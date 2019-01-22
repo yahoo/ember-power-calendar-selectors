@@ -6,6 +6,9 @@ module.exports = function(environment) {
     environment,
     rootURL: '/',
     locationType: 'auto',
+    moment: {
+      includeLocales: ['en', 'es', 'ru', 'fr', 'pt']
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build

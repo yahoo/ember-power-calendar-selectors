@@ -32,9 +32,10 @@ export default {
   period: 'year',
 
   /**
-   * @property {Array} years
+   * @property {Array} _years
+   * @private
    */
-  years: computed(
+  _years: computed(
     'focusedId',
     'publicAPI.{calendar,onSelect,onSelectYear,maxLength,maxDate,minDate,disabledDates.[]}',
     function() {
@@ -84,7 +85,7 @@ export default {
      * @param {Event} ev
      */
     keyDown(calendar, ev) {
-      const { focusedId, rowWidth, years } = this;
+      const { focusedId, rowWidth, _years: years } = this;
 
       if (focusedId) {
 
@@ -136,7 +137,7 @@ export default {
    * @param {Date} date 
    * @param {Date} thisYear 
    * @param {Object} calendar 
-   * @returns {Boolean}
+   * @returns {Object}
    * @override
    */
   buildPeriod(date, thisYear, calendar) {

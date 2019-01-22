@@ -87,14 +87,20 @@ export default PowerCalendarSelector.extend({
    * @override
    */
   isSelected(date, calendar = this.get('publicAPI.calendar')) {
-    const { start, end } = getProperties(calendar.selected || { start: null, end: null }, 'start', 'end');
-    const { period } = this;
+    const { selected = {} } = calendar;
 
-    return start && (
-      isSame(date, start, period) || end && (
-        isSame(date, end, period) || isBetween(date, start, end, period, '[]')
-      )
-    );
+    if (selected.hasOwnProperty('start') && selected.hasOwnProperty('end')) {
+      const { start = null, end = null } = selected;
+      const { period } = this;
+
+      return start && (
+        isSame(date, start, period) || end && (
+          isSame(date, end, period) || isBetween(date, start, end, period, '[]')
+        )
+      );
+    }
+
+    return this._super(...arguments);
   },
 
   _buildRange(periodObj) {

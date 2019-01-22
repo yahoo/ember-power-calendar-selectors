@@ -1,0 +1,27 @@
+{{!-- Copyright (c) 2018 Oath Inc. --}}
+
+{{#let  
+  (concat "power-calendar-months/" @calendar.type) 
+  (hash 
+    calendar=@calendar
+    disabledDates=@disabledDates
+    firstQuarter=firstQuarter
+    format=format
+    maxDate=@maxDate
+    maxLength=@maxLength
+    minDate=@minDate
+    onSelect=@onSelect
+    onSelectMonth=@onSelectMonth
+    onSelectQuarter=@onSelectQuarter
+    proximitySelection=@proximitySelection
+    showQuarters=showQuarters
+  )
+  as |componentName publicAPI|}}
+  {{#if hasBlock}}
+    {{#component componentName publicAPI=publicAPI as |month calendar|}}
+      {{yield month calendar}}
+    {{/component}}
+  {{else}}
+    {{component componentName publicAPI=publicAPI}}
+  {{/if}}
+{{/let}}

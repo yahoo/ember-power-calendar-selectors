@@ -2,7 +2,7 @@
 
 {{! template-lint-disable invalid-interactive }}
 <div class="ember-power-calendar-selector-year-grid" onkeydown={{action "keyDown" @publicAPI.calendar}}>
-  {{#each years key="id" as |year|}}
+  {{#each _years key="id" as |year|}}
     <button
       type="button"
       data-date="{{year.id}}"

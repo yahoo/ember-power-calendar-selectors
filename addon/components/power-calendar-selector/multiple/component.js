@@ -27,10 +27,14 @@ export default PowerCalendarSelector.extend({
    * @override
    */
   isSelected(date, calendar = this.get('publicAPI.calendar')) {
-    const selected = calendar.selected || [];
+    const { selected } = calendar;
     const { period } = this;
+
+    if (Array.isArray(selected)) {
+      return selected.some((d) => isSame(date, d, period));
+    }
     
-    return selected.some((d) => isSame(date, d, period));
+    return this._super(...arguments);
   },
 
   /**

@@ -114,7 +114,7 @@ export default Component.extend({
    * @param {Object} calendar 
    * @returns {Boolean}
    */
-  isSelected(date, calendar = this.calendar) {
+  isSelected(date, calendar = this.publicAPI.calendar) {
     const { period } = this;
     const { selected } = calendar;
 

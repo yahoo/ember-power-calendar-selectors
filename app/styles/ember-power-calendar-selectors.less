@@ -136,6 +136,155 @@
         box-shadow: inset 0px -2px 0px 0px @focus-shadow-color;
       }
     }
+    
+    &-months {
+      display: flex;
+    }
+
+    &-month {
+      -webkit-appearance: none;
+      align-items: center;
+      background-color: initial;
+      background-color: transparent;
+      border: initial;
+      border: none;
+      flex: 1 1 100%;
+      font-size: inherit;
+      justify-content: center;
+      outline: initial;
+      outline: none;
+      padding: 0;
+      margin-right: 2px;
+  
+      height: @cell-height;
+      max-height: @cell-height;
+  
+      color: @centered-text-color;
+      background-color: @centered-background-color;
+      
+      &-grid {
+        flex: 1 1 auto;
+      }
+  
+      &-row {
+        display: flex;
+        justify-content: space-between;
+
+        &--quarter {
+          height: @cell-height + 2px;
+          padding-left: @row-padding-left;
+          padding-right: @row-padding-right;
+        }
+      }
+  
+      &--current-month {
+        background-color: @now-background-color;
+      }
+  
+      &--interactive[disabled] {
+        opacity: 0.4;
+      }
+  
+      &:not([disabled]):hover {
+        background-color: @default-background-color--hover;
+      }
+  
+      &--selected {
+        font-weight: bold;
+  
+        background-color: @selected-background-color;
+        color: @selected-text-color;
+  
+        &.ember-power-calendar-month {
+          &--range-start {
+            background-color: @range-start-background-color;
+    
+            &:hover {
+              background-color: @range-start-background-color--hover;
+            }
+          }
+          
+          &--range-end {
+            background-color: @range-end-background-color;
+        
+            &:hover {
+              background-color: @range-end-background-color--hover;
+            }
+          }
+        }
+  
+        &:not([disabled]):hover {
+          background-color: @selected-background-color;
+          color: @selected-text-color;
+        }
+      }
+  
+      &--focused {
+        box-shadow: inset 0px -2px 0px 0px @focus-shadow-color;
+      }
+  
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  
+    &-quarters {
+      flex: 0 0 auto;
+      max-width: @cell-width;
+      width: @cell-width;
+      margin-right: 2px;
+    }
+
+    &-quarter {
+      -webkit-appearance: none;
+      background-color: transparent;
+      background-color: initial;
+      border: none;
+      border: initial;
+      outline: none;
+      outline: initial;
+      width: 100%;
+      font-size: inherit;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      
+      background-color: @default-background-color--hover;
+      color: @centered-text-color;
+      height: @cell-height;
+      line-height: @cell-height;
+      margin-bottom: 2px;
+      max-height: @cell-height;
+      text-align: center;
+  
+      &:last-child {
+        margin-bottom: 0px;
+      }
+  
+      &.ember-power-calendar-quarter--interactive:hover {
+        background-color: @centered-background-color;
+      }
+  
+      &--selected {
+        font-weight: bold;
+        background-color: @selected-background-color;
+        color: @selected-text-color;
+  
+        &:not([disabled]):hover {
+          background-color: @selected-background-color;
+          color: @selected-text-color;
+        }
+      }
+  
+      &--interactive[disabled] {
+        opacity: 0.4;
+      }
+
+      &:not([disabled]):hover {
+        background-color: @selected-background-color;
+        color: @selected-text-color;
+      }
+    }
   
     &-nav {
       box-sizing: border-box;

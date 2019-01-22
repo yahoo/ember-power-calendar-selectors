@@ -1,0 +1,48 @@
+{{! template-lint-disable invalid-interactive }}
+{{#if @publicAPI.showQuarters}}
+  <div class="ember-power-calendar-selector-quarters">
+    {{#each _quarters key="id" as |quarter|}}
+      <button 
+        data-date="{{quarter.id}}"
+        onclick={{action "selectQuarter" quarter @publicAPI.calendar}} 
+        class="
+          ember-power-calendar-selector-quarter
+          {{if _quartersInteractive "ember-power-calendar-selector-quarter--interactive"}}
+          {{if quarter.isSelected "ember-power-calendar-selector-quarter--selected"}}
+        "
+        disabled={{or (not _quartersInteractive) quarter.isDisabled}}
+      >
+        {{quarter.label}}
+      </button>
+    {{/each}}
+  </div>
+{{/if}}
+<div class="ember-power-calendar-selector-month-grid" onkeydown={{action "keyDown" @publicAPI.calendar}}>
+  {{#each _quarters key="id" as |quarter|}}
+    <div class="ember-power-calendar-selector-month-row ember-power-calendar-selector-month-row--quarter">
+      {{#each quarter.months key="id" as |month|}}
+        <button type="button"
+          data-date="{{month.id}}"
+          class="
+            ember-power-calendar-selector-month
+            {{if _monthsInteractive "ember-power-calendar-selector-month--interactive"}}
+            {{if month.isSelected "ember-power-calendar-selector-month--selected"}}
+            {{if month.isCurrentMonth "ember-power-calendar-selector-month--current-month"}}
+            {{if month.isFocused "ember-power-calendar-selector-month--focused"}}
+            {{if month.isRangeStart "ember-power-calendar-selector-month--range-start"}}
+            {{if month.isRangeEnd "ember-power-calendar-selector-month--range-end"}}
+          "
+          onclick={{action "selectMonth" month @publicAPI.calendar}}
+          onfocus={{action "focus" month}}
+          onblur={{action "blur"}}
+          disabled={{or (not _monthsInteractive) month.isDisabled}}>
+          {{#if hasBlock}}
+            {{yield month @publicAPI.calendar}}
+          {{else}}
+            {{power-calendar-format-date month.date @publicAPI.format locale=@publicAPI.calendar.locale}}
+          {{/if}}
+        </button>
+      {{/each}}
+    </div>
+  {{/each}}
+</div>
