@@ -1,5 +1,6 @@
 import PowerCalendarSelectorRange from 'ember-power-calendar-selectors/components/power-calendar-selector/range/component';
 import Months from '../months';
+import { getProperties } from '@ember/object';
 
 
 /**
@@ -19,10 +20,13 @@ export default PowerCalendarSelectorRange.extend(Months).extend({
      * @override
      */
     selectMonth(month, calendar, ev) {
-      const { publicAPI: {
-        calendar: { actions: { select } },
-        onSelectMonth,
-      } } = this;
+      const {
+        'publicAPI.calendar.actions.select': select,
+        'publicAPI.onSelectMonth': onSelectMonth
+      } = getProperties(this,
+        'publicAPI.calendar.actions.select',
+        'publicAPI.onSelectMonth'
+      );
 
       if (onSelectMonth)
         onSelectMonth(this._buildRange(month), calendar, ev);
@@ -38,10 +42,13 @@ export default PowerCalendarSelectorRange.extend(Months).extend({
      * @override
      */
     selectQuarter(quarter, calendar, ev) {
-      const { publicAPI: {
-        calendar: { actions: { select } },
-        onSelectQuarter,
-      } } = this;
+      const {
+        'publicAPI.calendar.actions.select': select,
+        'publicAPI.onSelectMonth': onSelectQuarter
+      } = getProperties(this,
+        'publicAPI.calendar.actions.select',
+        'publicAPI.onSelectQuarter'
+      );
 
       if (onSelectQuarter) {
         const { months } = quarter;

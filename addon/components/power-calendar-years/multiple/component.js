@@ -2,8 +2,10 @@
  * Copyright (c) 2018 Oath Inc.
  */
 
+import { get, getProperties } from '@ember/object';
 import PowerCalendarSelectorMultiple from 'ember-power-calendar-selectors/components/power-calendar-selector/multiple/component'
 import Years from '../years';
+
 
 /**
  * Years multiple selection component concrete class.
@@ -22,8 +24,14 @@ export default PowerCalendarSelectorMultiple.extend(Years).extend({
      * @override
      */
     selectYear(year, calendar, ev) {
-      const { publicAPI: { onSelectYear } } = this;
-      const { selected, actions: { select } } = calendar;
+      const onSelectYear = get(this, 'publicAPI.onSelectYear');
+      const {
+        'actions.select': select,
+        selected
+      } = getProperties(calendar,
+        'actions.select',
+        'selected'
+      );
 
       if (onSelectYear) 
         onSelectYear(this._buildCollection({ date: selected }, year), calendar, ev);

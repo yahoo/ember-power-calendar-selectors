@@ -2,6 +2,7 @@
  * Copyright (c) 2018 Oath Inc.
  */
 
+import { get } from '@ember/object';
 import PowerCalendarSelectorRange from 'ember-power-calendar-selectors/components/power-calendar-selector/range/component'
 import Years from '../years';
 
@@ -22,8 +23,8 @@ export default PowerCalendarSelectorRange.extend(Years).extend({
      * @override
      */
     selectYear(year, calendar, ev) {
-      const { publicAPI: { onSelectYear } } = this;
-      const { actions: { select } } = calendar;
+      const onSelectYear = get(this, 'publicAPI.onSelectYear');
+      const select = get(calendar, 'actions.select');
 
       if (onSelectYear)
         onSelectYear(this._buildRange(year), calendar, ev);

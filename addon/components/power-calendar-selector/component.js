@@ -5,6 +5,7 @@
 import Component from '@ember/component';
 import { scheduleOnce } from '@ember/runloop';
 import { inject } from '@ember/service';
+import { get, getProperties } from '@ember/object';
 import { PropTypes } from 'ember-prop-types';
 
 import {
@@ -57,7 +58,7 @@ export default Component.extend({
      * @param {Object} year - selected dateObj
      */
     focus(year) {
-      scheduleOnce('actions', this, this._updateFocused, year.id);
+      scheduleOnce('actions', this, this.get('_updateFocused'), year.id);
     },
 
     /**
@@ -66,7 +67,7 @@ export default Component.extend({
      * @action
      */
     blur() {
-      scheduleOnce('actions', this, this._updateFocused, null);
+      scheduleOnce('actions', this, this.get('_updateFocused'), null);
     }
   },
 
@@ -81,7 +82,7 @@ export default Component.extend({
    */
   buildPeriod(date, now, calendar) {
     const id = this.getPeriodId(date);
-    const { period, focusedId } = this;
+    const { period, focusedId } = getProperties(this, 'period', 'focusedId');
 
     return normalizeCalendarDay({
       date: new Date(date),
@@ -101,7 +102,7 @@ export default Component.extend({
    * @returns {String}
    */
   getPeriodId(date) {
-    const { publicAPI: { format } } = this;
+    const format = get(this, 'publicAPI.format');
 
     return formatDate(date, format);    
   },
@@ -114,9 +115,9 @@ export default Component.extend({
    * @param {Object} calendar 
    * @returns {Boolean}
    */
-  isSelected(date, calendar = this.publicAPI.calendar) {
-    const { period } = this;
-    const { selected } = calendar;
+  isSelected(date, calendar = this.get('publicAPI').calendar) {
+    const period = get(this, 'period');
+    const selected = get(calendar, 'selected');
 
     return selected ? isSame(date, selected, period) : false;
   },
@@ -129,12 +130,17 @@ export default Component.extend({
    * @returns {Boolean}
    */
   isDisabled(date) {
-    const { period } = this;
-    const { 
-      disabledDates,
-      maxDate,
-      minDate,
-    } = this.publicAPI;
+    const {
+      'publicAPI.disabledDates': disabledDates,
+      'publicAPI.maxDate': maxDate,
+      'publicAPI.minDate': minDate,
+      period
+    } = getProperties(this, 
+      'period',
+      'publicAPI.disabledDates',
+      'publicAPI.maxDate',
+      'publicAPI.minDate',
+    );
 
     if (minDate && isBefore(date, minDate) && !isSame(date, minDate, period)) {
       return true;
@@ -176,7 +182,7 @@ export default Component.extend({
    * @private
    */
   _focusDate(id) {
-    let el = this.element.querySelector(`[data-date="${id}"]`);
+    let el = this.get('element').querySelector(`[data-date="${id}"]`);
     if (el) {
       el.focus();
     }

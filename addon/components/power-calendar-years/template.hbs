@@ -1,16 +1,16 @@
 {{!-- Copyright (c) 2018 Oath Inc. --}}
 
 {{#let  
-  (concat "power-calendar-years/" @calendar.type) 
+  (concat "power-calendar-years/" attrs.calendar.type) 
   (hash
-    calendar=@calendar
-    disabledDates=@disabledDates
+    calendar=attrs.calendar
+    disabledDates=attrs.disabledDates
     format=format
-    maxDate=@maxDate
-    maxLength=@maxLength
-    minDate=@minDate
-    onSelectYear=@onSelectYear
-    proximitySelection=@proximitySelection
+    maxDate=attrs.maxDate
+    maxLength=attrs.maxLength
+    minDate=attrs.minDate
+    onSelectYear=attrs.onSelectYear
+    proximitySelection=attrs.proximitySelection
   )
   as |componentName publicAPI|}}
   {{#if hasBlock}}

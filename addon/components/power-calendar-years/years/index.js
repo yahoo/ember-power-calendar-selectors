@@ -2,7 +2,7 @@
  * Copyright (c) 2018 Oath Inc.
  */
 
-import { computed } from '@ember/object';
+import { computed, getProperties, get } from '@ember/object';
 import { scheduleOnce } from '@ember/runloop';
 import { assert } from '@ember/debug';
 import layout from './template';
@@ -39,7 +39,16 @@ export default {
     'focusedId',
     'publicAPI.{calendar,onSelect,onSelectYear,maxLength,maxDate,minDate,disabledDates.[]}',
     function() {
-      const { publicAPI: { calendar }, period, powerCalendarService } = this;
+      const {
+        'publicAPI.calendar': calendar,
+        period,
+        powerCalendarService
+      } = getProperties(this,
+        'publicAPI.calendar',
+        'period',
+        'powerCalendarService'
+      );
+
       const thisYear = powerCalendarService.getDate();
       const lastYear = this.lastYear(calendar);
 
@@ -70,8 +79,8 @@ export default {
      * @param {Event} ev
      */
     selectYear(year, calendar, ev) {
-      const { onSelectYear } = this.publicAPI;
-      const { actions: { select } } = calendar;
+      const onSelectYear = get(this, 'publicAPI.onSelectYear');
+      const select = get(calendar, 'actions.select');
 
       if (onSelectYear)
         onSelectYear(year, calendar, ev);
@@ -85,7 +94,15 @@ export default {
      * @param {Event} ev
      */
     keyDown(calendar, ev) {
-      const { focusedId, rowWidth, _years: years } = this;
+      const {
+        _years: years,
+        focusedId,
+        rowWidth
+      } = getProperties(this, 
+        '_years',
+        'focusedId',
+        'rowWidth'
+      );
 
       if (focusedId) {
 
@@ -142,7 +159,7 @@ export default {
    */
   buildPeriod(date, thisYear, calendar) {
     const year = this._super(...arguments);
-    const { period } = this;
+    const period = get(this, 'period');
 
     return Object.assign({}, year, {
       isCurrentYear: isSame(date, thisYear, period),

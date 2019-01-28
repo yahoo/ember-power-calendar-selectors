@@ -2,7 +2,7 @@
  * Copyright (c) 2018 Oath Inc.
  */
 
-import { getProperties } from '@ember/object';
+import { get, getProperties } from '@ember/object';
 import PowerCalendarSelector from '../component';
 
 import {
@@ -33,7 +33,7 @@ export default PowerCalendarSelector.extend({
   buildPeriod(date, now, calendar) {
     const periodObj = this._super(...arguments);
     const { start, end } = getProperties(calendar.selected || { start: null, end: null }, 'start', 'end');
-    const { period } = this;
+    const period = get(this, 'period');
 
     if (start && end) {
       periodObj.isRangeStart = periodObj.isSelected && isSame(date, start, period);
@@ -63,12 +63,12 @@ export default PowerCalendarSelector.extend({
    * @returns {Boolean}
    */
   isDisabled(date) {
-    const { publicAPI: { calendar } } = this;
+    const calendar = get(this, 'publicAPI.calendar');
     const range = this._buildRange({ date });
     const { start, end } = range.date;
 
     if (start && end) {
-      const { minRange, maxRange } = calendar;
+      const { minRange, maxRange } = getProperties(calendar, 'minRange', 'maxRange');
       const diffInMs = Math.abs(diff(end, start));
 
       if (diffInMs < minRange || maxRange && diffInMs > maxRange) {
@@ -87,11 +87,11 @@ export default PowerCalendarSelector.extend({
    * @override
    */
   isSelected(date, calendar = this.get('publicAPI.calendar')) {
-    const { selected = {} } = calendar;
+    const { selected = {} } = getProperties(calendar, 'selected');
 
     if (selected.hasOwnProperty('start') && selected.hasOwnProperty('end')) {
       const { start = null, end = null } = selected;
-      const { period } = this;
+      const period = get(this, 'period');
 
       return start && (
         isSame(date, start, period) || end && (
@@ -105,14 +105,14 @@ export default PowerCalendarSelector.extend({
 
   _buildRange(periodObj) {
     const {
-      publicAPI: { calendar: {
-        selected: {
-          start = null,
-          end = null,
-        } = {},
-        proximitySelection,
-      } }
-    } = this;
+      'publicAPI.calendar.proximitySelection': proximitySelection,
+      'publicAPI.calendar.selected.end': end,
+      'publicAPI.calendar.selected.start': start
+    } = getProperties(this,
+      'publicAPI.calendar.proximitySelection',
+      'publicAPI.calendar.selected.end',
+      'publicAPI.calendar.selected.start'
+    );
 
     if (proximitySelection) {
       return this._buildRangeByProximity(periodObj, start, end);

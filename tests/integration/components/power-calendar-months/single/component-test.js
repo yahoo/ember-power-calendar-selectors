@@ -11,7 +11,7 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
 
   hooks.beforeEach(function() {
     assertionInjector(this);
-    calendarService = this.owner.lookup('service:power-calendar');
+    calendarService = this.get('owner').lookup('service:power-calendar');
     calendarService.set('date', new Date(2013, 9, 18));
     calendar = {
       center: calendarService.getDate(),
@@ -43,7 +43,7 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
     `);
 
     assert.equal(
-      this.element.querySelector('.ember-power-calendar-selector-month-grid').textContent.replace(/\s+/g, ' ').trim(), 
+      this.get('element').querySelector('.ember-power-calendar-selector-month-grid').textContent.replace(/\s+/g, ' ').trim(), 
       'janv. févr. mars avr. mai juin juil. août sept. oct. nov. déc.'
     );
 
@@ -63,13 +63,13 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
     );
 
     assert.equal(
-      this.element.querySelector('.ember-power-calendar-selector-month-grid').textContent.replace(/\s+/g, ' ').trim(), 
+      this.get('element').querySelector('.ember-power-calendar-selector-month-grid').textContent.replace(/\s+/g, ' ').trim(), 
       'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'
     );
 
     run(() => this.set('calendar.locale', 'es'));
     assert.equal(
-      this.element.querySelector('.ember-power-calendar-selector-month-grid').textContent.replace(/\s+/g, ' ').trim(), 
+      this.get('element').querySelector('.ember-power-calendar-selector-month-grid').textContent.replace(/\s+/g, ' ').trim(), 
       'ene. feb. mar. abr. may. jun. jul. ago. sep. oct. nov. dic.'
     );
   });
@@ -88,14 +88,14 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
     `);
 
     assert.equal(
-      this.element.querySelector('.ember-power-calendar-selector-month-grid').textContent.replace(/\s+/g, ' ').trim(), 
+      this.get('element').querySelector('.ember-power-calendar-selector-month-grid').textContent.replace(/\s+/g, ' ').trim(), 
       '01 02 03 04 05 06 07 08 09 10 11 12',
       'Grid rendered with MM format.'
     );
 
     run(() => this.set('format', 'MMMM'));
     assert.equal(
-      this.element.querySelector('.ember-power-calendar-selector-month-grid').textContent.replace(/\s+/g, ' ').trim(), 
+      this.get('element').querySelector('.ember-power-calendar-selector-month-grid').textContent.replace(/\s+/g, ' ').trim(), 
       'January February March April May June July August September October November December',
       'Grid rendered with MMM format.'
     );
@@ -264,11 +264,11 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
 
     await focus('.ember-power-calendar-selector-month[data-date="2013-10"]');
     assert.dom('.ember-power-calendar-selector-month[data-date="2013-10"]').hasClass('ember-power-calendar-selector-month--focused');
-    assert.equal(document.activeElement, this.element.querySelector('.ember-power-calendar-selector-month[data-date="2013-10"]'));
+    assert.equal(document.activeElement, this.get('element').querySelector('.ember-power-calendar-selector-month[data-date="2013-10"]'));
 
     await triggerKeyEvent('.ember-power-calendar-selector-month[data-date="2013-10"]', 'keydown', 37); // left arrow
     assert.dom('.ember-power-calendar-selector-month[data-date="2013-10"]').hasClass('ember-power-calendar-selector-month--focused');
-    assert.equal(document.activeElement, this.element.querySelector('.ember-power-calendar-selector-month[data-date="2013-10"]'));
+    assert.equal(document.activeElement, this.get('element').querySelector('.ember-power-calendar-selector-month[data-date="2013-10"]'));
   });
 
   test('When the user tries to focus a disabled month date with the up arrow key, the focus stays where it is', async function(assert) {
@@ -290,11 +290,11 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
 
     await focus('.ember-power-calendar-selector-month[data-date="2013-10"]');
     assert.dom('.ember-power-calendar-selector-month[data-date="2013-10"]').hasClass('ember-power-calendar-selector-month--focused');
-    assert.equal(document.activeElement, this.element.querySelector('.ember-power-calendar-selector-month[data-date="2013-10"]'));
+    assert.equal(document.activeElement, this.get('element').querySelector('.ember-power-calendar-selector-month[data-date="2013-10"]'));
 
     await triggerKeyEvent('.ember-power-calendar-selector-month[data-date="2013-10"]', 'keydown', 38); // up arrow
     assert.dom('.ember-power-calendar-selector-month[data-date="2013-10"]').hasClass('ember-power-calendar-selector-month--focused');
-    assert.equal(document.activeElement, this.element.querySelector('.ember-power-calendar-selector-month[data-date="2013-10"]'));
+    assert.equal(document.activeElement, this.get('element').querySelector('.ember-power-calendar-selector-month[data-date="2013-10"]'));
   });
 
   test('When the user tries to focus a disabled month date with the right arrow key, the focus stays where it is', async function(assert) {
@@ -316,11 +316,11 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
 
     await focus('.ember-power-calendar-selector-month[data-date="2013-10"]');
     assert.dom('.ember-power-calendar-selector-month[data-date="2013-10"]').hasClass('ember-power-calendar-selector-month--focused');
-    assert.equal(document.activeElement, this.element.querySelector('.ember-power-calendar-selector-month[data-date="2013-10"]'));
+    assert.equal(document.activeElement, this.get('element').querySelector('.ember-power-calendar-selector-month[data-date="2013-10"]'));
 
     await triggerKeyEvent('.ember-power-calendar-selector-month[data-date="2013-10"]', 'keydown', 39); // right arrow
     assert.dom('.ember-power-calendar-selector-month[data-date="2013-10"]').hasClass('ember-power-calendar-selector-month--focused');
-    assert.equal(document.activeElement, this.element.querySelector('.ember-power-calendar-selector-month[data-date="2013-10"]'));
+    assert.equal(document.activeElement, this.get('element').querySelector('.ember-power-calendar-selector-month[data-date="2013-10"]'));
   });
 
   test('When the user tries to focus a disabled month date with the down arrow key, the focus stays where it is', async function(assert) {
@@ -341,11 +341,11 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
 
     await focus('.ember-power-calendar-selector-month[data-date="2013-10"]');
     assert.dom('.ember-power-calendar-selector-month[data-date="2013-10"]').hasClass('ember-power-calendar-selector-month--focused');
-    assert.equal(document.activeElement, this.element.querySelector('.ember-power-calendar-selector-month[data-date="2013-10"]'));
+    assert.equal(document.activeElement, this.get('element').querySelector('.ember-power-calendar-selector-month[data-date="2013-10"]'));
 
     await triggerKeyEvent('.ember-power-calendar-selector-month[data-date="2013-10"]', 'keydown', 40); // down arrow
     assert.dom('.ember-power-calendar-selector-month[data-date="2013-10"]').hasClass('ember-power-calendar-selector-month--focused');
-    assert.equal(document.activeElement, this.element.querySelector('.ember-power-calendar-selector-month[data-date="2013-10"]'));
+    assert.equal(document.activeElement, this.get('element').querySelector('.ember-power-calendar-selector-month[data-date="2013-10"]'));
   });
 
   test('It renders quarters selected if any date inside the month is selected', async function(assert) {

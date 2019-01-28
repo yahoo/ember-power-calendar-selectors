@@ -2,6 +2,7 @@
  * Copyright (c) 2018 Oath Inc.
  */
 
+import { get } from '@ember/object';
 import fallbackIfUndefined from 'ember-power-calendar/utils/computed-fallback-if-undefined';
 import { isSame, normalizeMultipleActionValue } from 'ember-power-calendar-utils';
 import PowerCalendarSelector from '../component';
@@ -27,8 +28,8 @@ export default PowerCalendarSelector.extend({
    * @override
    */
   isSelected(date, calendar = this.get('publicAPI.calendar')) {
-    const { selected } = calendar;
-    const { period } = this;
+    const selected = get(calendar, 'selected');
+    const period = get(this, 'period');
 
     if (Array.isArray(selected)) {
       return selected.some((d) => isSame(date, d, period));
@@ -60,7 +61,7 @@ export default PowerCalendarSelector.extend({
    * @private
    */
   _buildCollection({ date: _selected } = {}, { date }) {
-    const { period } = this;
+    const period = get(this, 'period');
     const selected = _selected || [];
     const index = selected.findIndex(s => isSame(date, s, period));
 

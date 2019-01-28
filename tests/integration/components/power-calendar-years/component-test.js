@@ -11,7 +11,7 @@ module('Integration | Component | power-calendar-years', function(hooks) {
 
   hooks.beforeEach(function() {
     assertionInjector(this);
-    calendarService = this.owner.lookup('service:power-calendar');
+    calendarService = this.get('owner').lookup('service:power-calendar');
     calendarService.set('date', new Date(2013, 9, 18));
     calendar = {
       center: calendarService.getDate(),
@@ -33,7 +33,7 @@ module('Integration | Component | power-calendar-years', function(hooks) {
 
     await render(hbs`{{power-calendar-years calendar=calendar}}`);
     assert.equal(
-      this.element.textContent.replace(/\s+/g, ' ').trim(), 
+      this.get('element').textContent.replace(/\s+/g, ' ').trim(), 
       '2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020'
     );
   });
@@ -67,11 +67,11 @@ module('Integration | Component | power-calendar-years', function(hooks) {
 
     await focus('.ember-power-calendar-selector-year[data-date="2016"]');
     assert.dom('.ember-power-calendar-selector-year[data-date="2016"]').hasClass('ember-power-calendar-selector-year--focused');
-    assert.equal(document.activeElement, this.element.querySelector('.ember-power-calendar-selector-year[data-date="2016"]'));
+    assert.equal(document.activeElement, this.get('element').querySelector('.ember-power-calendar-selector-year[data-date="2016"]'));
 
     await triggerKeyEvent('.ember-power-calendar-selector-year[data-date="2016"]', 'keydown', 37); // left arrow
     assert.dom('.ember-power-calendar-selector-year[data-date="2016"]').hasClass('ember-power-calendar-selector-year--focused');
-    assert.equal(document.activeElement, this.element.querySelector('.ember-power-calendar-selector-year[data-date="2016"]'));
+    assert.equal(document.activeElement, this.get('element').querySelector('.ember-power-calendar-selector-year[data-date="2016"]'));
   });
 
   test('When the user tries to focus a disabled year date with the up arrow key, the focus stays where it is', async function(assert) {
@@ -86,11 +86,11 @@ module('Integration | Component | power-calendar-years', function(hooks) {
 
     await focus('.ember-power-calendar-selector-year[data-date="2016"]');
     assert.dom('.ember-power-calendar-selector-year[data-date="2016"]').hasClass('ember-power-calendar-selector-year--focused');
-    assert.equal(document.activeElement, this.element.querySelector('.ember-power-calendar-selector-year[data-date="2016"]'));
+    assert.equal(document.activeElement, this.get('element').querySelector('.ember-power-calendar-selector-year[data-date="2016"]'));
 
     await triggerKeyEvent('.ember-power-calendar-selector-year[data-date="2016"]', 'keydown', 38); // up arrow
     assert.dom('.ember-power-calendar-selector-year[data-date="2016"]').hasClass('ember-power-calendar-selector-year--focused');
-    assert.equal(document.activeElement, this.element.querySelector('.ember-power-calendar-selector-year[data-date="2016"]'));
+    assert.equal(document.activeElement, this.get('element').querySelector('.ember-power-calendar-selector-year[data-date="2016"]'));
   });
 
   test('When the user tries to focus a disabled year date with the right arrow key, the focus stays where it is', async function(assert) {
@@ -105,11 +105,11 @@ module('Integration | Component | power-calendar-years', function(hooks) {
 
     await focus('.ember-power-calendar-selector-year[data-date="2016"]');
     assert.dom('.ember-power-calendar-selector-year[data-date="2016"]').hasClass('ember-power-calendar-selector-year--focused');
-    assert.equal(document.activeElement, this.element.querySelector('.ember-power-calendar-selector-year[data-date="2016"]'));
+    assert.equal(document.activeElement, this.get('element').querySelector('.ember-power-calendar-selector-year[data-date="2016"]'));
 
     await triggerKeyEvent('.ember-power-calendar-selector-year[data-date="2016"]', 'keydown', 39); // right arrow
     assert.dom('.ember-power-calendar-selector-year[data-date="2016"]').hasClass('ember-power-calendar-selector-year--focused');
-    assert.equal(document.activeElement, this.element.querySelector('.ember-power-calendar-selector-year[data-date="2016"]'));
+    assert.equal(document.activeElement, this.get('element').querySelector('.ember-power-calendar-selector-year[data-date="2016"]'));
   });
 
   test('When the user tries to focus a disabled year date with the down arrow key, the focus stays where it is', async function(assert) {
@@ -124,11 +124,11 @@ module('Integration | Component | power-calendar-years', function(hooks) {
 
     await focus('.ember-power-calendar-selector-year[data-date="2016"]');
     assert.dom('.ember-power-calendar-selector-year[data-date="2016"]').hasClass('ember-power-calendar-selector-year--focused');
-    assert.equal(document.activeElement, this.element.querySelector('.ember-power-calendar-selector-year[data-date="2016"]'));
+    assert.equal(document.activeElement, this.get('element').querySelector('.ember-power-calendar-selector-year[data-date="2016"]'));
 
     await triggerKeyEvent('.ember-power-calendar-selector-year[data-date="2016"]', 'keydown', 40); // down arrow
     assert.dom('.ember-power-calendar-selector-year[data-date="2016"]').hasClass('ember-power-calendar-selector-year--focused');
-    assert.equal(document.activeElement, this.element.querySelector('.ember-power-calendar-selector-year[data-date="2016"]'));
+    assert.equal(document.activeElement, this.get('element').querySelector('.ember-power-calendar-selector-year[data-date="2016"]'));
   });
 
   test('If the user passes `disabledDates=someDate` to single calendars, years on those dates are disabled', async function(assert) {

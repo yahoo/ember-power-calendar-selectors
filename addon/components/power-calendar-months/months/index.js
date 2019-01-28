@@ -1,4 +1,4 @@
-import { computed, set } from '@ember/object';
+import { computed, set, get, getProperties } from '@ember/object';
 import { scheduleOnce } from '@ember/runloop';
 import { assert } from '@ember/debug';
 import layout from './template';
@@ -47,12 +47,17 @@ export default {
     'publicAPI.{calendar,calendar.seleted.[],minDate,maxDate,disabledDates.[],onSelect,onSelectQuarter,firstQuarter,maxLength}',
     function() {
       const {
-        rowWidth,
-        powerCalendarService,
+        'publicAPI.calendar': calendar,
         period,
-        publicAPI: { calendar }
-      } = this;
-      
+        powerCalendarService,
+        rowWidth
+      } = getProperties(this, 
+        'period', 
+        'powerCalendarService', 
+        'publicAPI.calendar',
+        'rowWidth'
+      );
+
       const thisMonth = powerCalendarService.getDate();
       const lastMonth = this.lastMonth(calendar);
       let month = this.firstMonth(calendar);
@@ -96,10 +101,13 @@ export default {
      * @param {Event} ev 
      */
     selectMonth(...args) {
-      const { publicAPI: { 
-        onSelectMonth,
-        calendar: { actions: { select } },
-      } } = this;
+      const { 
+        'publicAPI.calendar.actions.select': select,
+        'publicAPI.onSelectMonth': onSelectMonth
+      } = getProperties(this, 
+        'publicAPI.calendar.actions.select',
+        'publicAPI.onSelectMonth'
+      );
 
       if (onSelectMonth) 
         onSelectMonth(...args);
@@ -115,10 +123,13 @@ export default {
      * @param {Event} ev 
      */
     selectQuarter(...args) {
-      const { publicAPI: { 
-        onSelectQuarter,
-        calendar: { actions: { select } },
-      } } = this;
+      const {
+        'publicAPI.calendar.actions.select': select,
+        'publicAPI.onSelectQuarter': onSelectQuarter
+      } = getProperties(this, 
+        'publicAPI.calendar.actions.select',
+        'publicAPI.onSelectQuarter'
+      );
 
       if (onSelectQuarter) 
         onSelectQuarter(...args);
@@ -133,10 +144,14 @@ export default {
      */
     keyDown(calendar, ev) {
       const {
+        _quarters: quarters,
         focusedId,
-        rowWidth,
-        _quarters: quarters
-      } = this;
+        rowWidth
+      } = getProperties(this,
+        '_quarters',
+        'focusedId',
+        'rowWidth'
+      );
 
       if (focusedId) {
         // find the month
@@ -205,7 +220,7 @@ export default {
    */
   buildPeriod(date, thisMonth) {
     const month = this._super(...arguments);
-    const { period } = this;
+    const period = get(this, 'period');
 
     return Object.assign({}, month, {
       isCurrentMonth: isSame(date, thisMonth, period),
@@ -287,7 +302,7 @@ export default {
    * @returns {Moment}
    */
   lastMonth(calendar) {
-    const { period } = this;
+    const period = get(this, 'period');
     assert("The center of the calendar is an invalid date.", !isNaN(calendar.center.getTime()));
 
     return startOf(endOf(calendar.center, 'year'), period);
@@ -305,7 +320,7 @@ export default {
    * @private
    */
   _renderQuarter(quarterIdx) {
-    const { publicAPI: { firstQuarter } } = this;
+    const firstQuarter = get(this, 'publicAPI.firstQuarter');
     assert('firstQuarter must be between 1 and 4', firstQuarter >= 1 && firstQuarter <= 4);
 
     const firstQuarterIdx = firstQuarter - 1;

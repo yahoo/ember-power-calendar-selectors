@@ -11,7 +11,7 @@ module('Integration | Component | power-calendar-years/multiple', function(hooks
   hooks.beforeEach(function() {
     assertionInjector(this);
     center = new Date(2010, 0);
-    calendarService = this.owner.lookup('service:power-calendar');
+    calendarService = this.get('owner').lookup('service:power-calendar');
     calendarService.set('date', new Date(2013, 9, 18));
     calendar = {
       center,
@@ -39,7 +39,7 @@ module('Integration | Component | power-calendar-years/multiple', function(hooks
     `);
 
     assert.equal(
-      this.element.textContent.replace(/\s+/g, ' ').trim(), 
+      this.get('element').textContent.replace(/\s+/g, ' ').trim(), 
       '2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020'
     );
   });

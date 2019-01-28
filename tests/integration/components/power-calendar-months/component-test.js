@@ -10,7 +10,7 @@ module('Integration | Component | power-calendar-months', function(hooks) {
 
   hooks.beforeEach(function() {
     assertionInjector(this);
-    calendarService = this.owner.lookup('service:power-calendar');
+    calendarService = this.get('owner').lookup('service:power-calendar');
     calendarService.set('date', new Date(2013, 9, 18));
     calendar = {
       center: calendarService.getDate(),
@@ -32,7 +32,7 @@ module('Integration | Component | power-calendar-months', function(hooks) {
 
     await render(hbs`{{power-calendar-months calendar=calendar}}`);
     assert.equal(
-      this.element.textContent.replace(/\s+/g, ' ').trim(), 
+      this.get('element').textContent.replace(/\s+/g, ' ').trim(), 
       'Q1 Q2 Q3 Q4 Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'
     );
   });

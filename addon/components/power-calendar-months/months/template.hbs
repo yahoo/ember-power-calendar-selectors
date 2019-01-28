@@ -1,10 +1,10 @@
 {{! template-lint-disable invalid-interactive }}
-{{#if @publicAPI.showQuarters}}
+{{#if attrs.publicAPI.showQuarters}}
   <div class="ember-power-calendar-selector-quarters">
     {{#each _quarters key="id" as |quarter|}}
       <button 
         data-date="{{quarter.id}}"
-        onclick={{action "selectQuarter" quarter @publicAPI.calendar}} 
+        onclick={{action "selectQuarter" quarter attrs.publicAPI.calendar}} 
         class="
           ember-power-calendar-selector-quarter
           {{if _quartersInteractive "ember-power-calendar-selector-quarter--interactive"}}
@@ -17,7 +17,7 @@
     {{/each}}
   </div>
 {{/if}}
-<div class="ember-power-calendar-selector-month-grid" onkeydown={{action "keyDown" @publicAPI.calendar}}>
+<div class="ember-power-calendar-selector-month-grid" onkeydown={{action "keyDown" attrs.publicAPI.calendar}}>
   {{#each _quarters key="id" as |quarter|}}
     <div class="ember-power-calendar-selector-month-row ember-power-calendar-selector-month-row--quarter">
       {{#each quarter.months key="id" as |month|}}
@@ -32,14 +32,14 @@
             {{if month.isRangeStart "ember-power-calendar-selector-month--range-start"}}
             {{if month.isRangeEnd "ember-power-calendar-selector-month--range-end"}}
           "
-          onclick={{action "selectMonth" month @publicAPI.calendar}}
+          onclick={{action "selectMonth" month attrs.publicAPI.calendar}}
           onfocus={{action "focus" month}}
           onblur={{action "blur"}}
           disabled={{or (not _monthsInteractive) month.isDisabled}}>
           {{#if hasBlock}}
-            {{yield month @publicAPI.calendar}}
+            {{yield month attrs.publicAPI.calendar}}
           {{else}}
-            {{power-calendar-format-date month.date @publicAPI.format locale=@publicAPI.calendar.locale}}
+            {{power-calendar-format-date month.date attrs.publicAPI.format locale=attrs.publicAPI.calendar.locale}}
           {{/if}}
         </button>
       {{/each}}

@@ -11,7 +11,7 @@ module('Integration | Component | power-calendar-years/range', function(hooks) {
   hooks.beforeEach(function() {
     assertionInjector(this);
     center = new Date(2010, 0);
-    calendarService = this.owner.lookup('service:power-calendar');
+    calendarService = this.get('owner').lookup('service:power-calendar');
     calendarService.set('date', new Date(2013, 9, 18));
     calendar = {
       center: center,
@@ -36,7 +36,7 @@ module('Integration | Component | power-calendar-years/range', function(hooks) {
     )}}`);
 
     assert.equal(
-      this.element.textContent.replace(/\s+/g, ' ').trim(), 
+      this.get('element').textContent.replace(/\s+/g, ' ').trim(), 
       '2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020'
     );
   });
@@ -54,11 +54,11 @@ module('Integration | Component | power-calendar-years/range', function(hooks) {
       {{/power-calendar-range}}
     `);
 
-    let allYearsInRangeAreSelected = this.element.querySelector('.ember-power-calendar-selector-year[data-date="2016"]').classList.contains('ember-power-calendar-selector-year--selected')
-      && this.element.querySelector('.ember-power-calendar-selector-year[data-date="2017"]').classList.contains('ember-power-calendar-selector-year--selected')
-      && this.element.querySelector('.ember-power-calendar-selector-year[data-date="2018"]').classList.contains('ember-power-calendar-selector-year--selected')
-      && this.element.querySelector('.ember-power-calendar-selector-year[data-date="2019"]').classList.contains('ember-power-calendar-selector-year--selected')
-      && this.element.querySelector('.ember-power-calendar-selector-year[data-date="2020"]').classList.contains('ember-power-calendar-selector-year--selected');
+    let allYearsInRangeAreSelected = this.get('element').querySelector('.ember-power-calendar-selector-year[data-date="2016"]').classList.contains('ember-power-calendar-selector-year--selected')
+      && this.get('element').querySelector('.ember-power-calendar-selector-year[data-date="2017"]').classList.contains('ember-power-calendar-selector-year--selected')
+      && this.get('element').querySelector('.ember-power-calendar-selector-year[data-date="2018"]').classList.contains('ember-power-calendar-selector-year--selected')
+      && this.get('element').querySelector('.ember-power-calendar-selector-year[data-date="2019"]').classList.contains('ember-power-calendar-selector-year--selected')
+      && this.get('element').querySelector('.ember-power-calendar-selector-year[data-date="2020"]').classList.contains('ember-power-calendar-selector-year--selected');
     assert.ok(allYearsInRangeAreSelected, 'All years in range are selected');
     assert.dom('.ember-power-calendar-selector-year[data-date="2016"]').hasClass(
       'ember-power-calendar-selector-year--range-start',
