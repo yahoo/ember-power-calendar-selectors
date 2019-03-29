@@ -10,6 +10,6 @@ export default function isQuarter(context, quarter, message = 'Is a valid quarte
     result,
     actual: result,
     expected: true,
-    message
+    message,
   });
 }

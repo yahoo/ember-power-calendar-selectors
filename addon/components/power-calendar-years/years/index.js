@@ -37,16 +37,16 @@ export default {
    */
   _years: computed(
     'focusedId',
-    'publicAPI.{calendar,onSelect,onSelectYear,maxLength,maxDate,minDate,disabledDates.[]}',
+    'publicAPI.{calendar,onSelect,maxLength,maxDate,minDate,disabledDates.[]}',
     function() {
       const {
         'publicAPI.calendar': calendar,
         period,
-        powerCalendarService
+        powerCalendarService,
       } = getProperties(this,
         'publicAPI.calendar',
         'period',
-        'powerCalendarService'
+        'powerCalendarService',
       );
 
       const thisYear = powerCalendarService.getDate();
@@ -68,26 +68,9 @@ export default {
    * Should years be interactive?
    * @property {Boolean} _yearsInteractive
    */
-  _interactive: computed.or('publicAPI.{onSelectYear,calendar.actions.select}'),
+  _interactive: computed.or('publicAPI.{onSelect,calendar.actions.select}'),
 
   actions: {
-    /**
-     * @action selectYear - fired on year selection
-     * 
-     * @param {Object} year
-     * @param {Object} calendar
-     * @param {Event} ev
-     */
-    selectYear(year, calendar, ev) {
-      const onSelectYear = get(this, 'publicAPI.onSelectYear');
-      const select = get(calendar, 'actions.select');
-
-      if (onSelectYear)
-        onSelectYear(year, calendar, ev);
-      else if (select)
-        select(year, calendar, ev);
-    },
-
     /**
      * @action keyDown - Handles arrow navigation with focus
      * @param {Object} calendar 
@@ -97,11 +80,11 @@ export default {
       const {
         _years: years,
         focusedId,
-        rowWidth
+        rowWidth,
       } = getProperties(this, 
         '_years',
         'focusedId',
-        'rowWidth'
+        'rowWidth',
       );
 
       if (focusedId) {
@@ -146,7 +129,7 @@ export default {
         this.set('focusedId', year.id);
         scheduleOnce('afterRender', this, '_focusDate', year.id);
       }
-    }
+    },
   },
 
   /**

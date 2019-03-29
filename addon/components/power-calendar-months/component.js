@@ -40,8 +40,7 @@ export default Component.extend({
     maxDate: PropTypes.date,
     maxLength: PropTypes.any,
     minDate: PropTypes.date,
-    onSelectMonth: PropTypes.func,
-    onSelectQuarter: PropTypes.func,
+    onSelect: PropTypes.func,
     proximitySelection: PropTypes.any,
   },
 });

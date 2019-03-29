@@ -15,6 +15,13 @@ module.exports = {
     browser: true
   },
   rules: { 
+    "comma-dangle": [2, {
+        "arrays": "always-multiline",
+        "objects": "always-multiline",
+        "imports": "always-multiline",
+        "exports": "always-multiline",
+        "functions": "always-multiline"
+    }],
     'ember/avoid-leaking-state-in-ember-objects': [2, [
       'classNames',
       'classNameBindings',
@@ -26,7 +33,8 @@ module.exports = {
       'queryParams',
       'attrs',
       'propTypes'
-    ]]
+    ]],
+
   },
   overrides: [
     // node files

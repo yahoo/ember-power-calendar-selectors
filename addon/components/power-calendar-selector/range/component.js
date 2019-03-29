@@ -107,11 +107,11 @@ export default PowerCalendarSelector.extend({
     const {
       'publicAPI.calendar.proximitySelection': proximitySelection,
       'publicAPI.calendar.selected.end': end,
-      'publicAPI.calendar.selected.start': start
+      'publicAPI.calendar.selected.start': start,
     } = getProperties(this,
       'publicAPI.calendar.proximitySelection',
       'publicAPI.calendar.selected.end',
-      'publicAPI.calendar.selected.start'
+      'publicAPI.calendar.selected.start',
     );
 
     if (proximitySelection) {
@@ -140,8 +140,8 @@ export default PowerCalendarSelector.extend({
       return normalizeRangeActionValue({
         date: {
           start: changeStart ? periodObj.date : start,
-          end: changeStart ? end : periodObj.date
-        }
+          end: changeStart ? end : periodObj.date,
+        },
       });
     }
 
@@ -171,5 +171,5 @@ export default PowerCalendarSelector.extend({
     }
 
     return normalizeRangeActionValue({ date: { start: periodObj.date, end: null } });
-  }
+  },
 });

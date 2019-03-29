@@ -1,25 +1,23 @@
 {{!-- Copyright (c) 2018 Oath Inc. --}}
 
-{{#let  
-  (concat "power-calendar-months/" attrs.calendar.type) 
-  (hash 
-    calendar=attrs.calendar
-    disabledDates=attrs.disabledDates
+{{#let
+  (concat "power-calendar-months/" calendar.type)
+  (hash
+    calendar=calendar
+    disabledDates=disabledDates
     firstQuarter=firstQuarter
     format=format
-    maxDate=attrs.maxDate
-    maxLength=attrs.maxLength
-    minDate=attrs.minDate
-    onSelect=attrs.onSelect
-    onSelectMonth=attrs.onSelectMonth
-    onSelectQuarter=attrs.onSelectQuarter
-    proximitySelection=attrs.proximitySelection
+    maxDate=maxDate
+    maxLength=maxLength
+    minDate=minDate
+    onSelect=onSelect
+    proximitySelection=proximitySelection
     showQuarters=showQuarters
   )
   as |componentName publicAPI|}}
   {{#if hasBlock}}
-    {{#component componentName publicAPI=publicAPI as |month calendar|}}
-      {{yield month calendar}}
+    {{#component componentName publicAPI=publicAPI as |month childCalendar|}}
+      {{yield month childCalendar}}
     {{/component}}
   {{else}}
     {{component componentName publicAPI=publicAPI}}

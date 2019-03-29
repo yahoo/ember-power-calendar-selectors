@@ -1,7 +1,7 @@
 {{!-- Copyright (c) 2018 Oath Inc. --}}
 
 {{! template-lint-disable invalid-interactive }}
-<div class="ember-power-calendar-selector-year-grid" onkeydown={{action "keyDown" attrs.publicAPI.calendar}}>
+<div class="ember-power-calendar-selector-year-grid" onkeydown={{action "keyDown" publicAPI.calendar}}>
   {{#each _years key="id" as |year|}}
     <button
       type="button"
@@ -16,15 +16,15 @@
         {{if year.isRangeStart "ember-power-calendar-selector-year--range-start"}}
         {{if year.isRangeEnd "ember-power-calendar-selector-year--range-end"}}
       "
-      onclick={{action "selectYear" year attrs.publicAPI.calendar}}
+      onclick={{action "select" year publicAPI.calendar}}
       onfocus={{action "focus" year}}
       onblur={{action "blur"}}
       disabled={{or (not _interactive) year.isDisabled}}>
 
       {{#if hasBlock}}
-        {{yield year attrs.publicAPI.calendar}}
+        {{yield year publicAPI.calendar}}
       {{else}}
-        {{power-calendar-format-date year.date attrs.publicAPI.format locale=attrs.publicAPI.calendar.locale}}
+        {{power-calendar-format-date year.date publicAPI.format locale=publicAPI.calendar.locale}}
       {{/if}}
     </button>
   {{/each}}

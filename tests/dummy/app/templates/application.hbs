@@ -1,8 +1,8 @@
-{{#power-calendar-multiple 
-  onSelect=(action (mut selected) value="date") 
-  locale="en" 
-  selected=selected 
+{{#power-calendar-range
+  onSelect=(action (mut selected) value="date")
+  locale="en"
+  selected=selected
 as |calendar|
 }}
-  {{power-calendar-months calendar=calendar}}
-{{/power-calendar-multiple}}
+  {{power-calendar-months calendar=calendar onSelect=(action (mut selected) value="date")}}
+{{/power-calendar-range}}

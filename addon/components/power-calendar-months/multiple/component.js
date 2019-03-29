@@ -1,6 +1,6 @@
 import PowerCalendarSelectorMultiple from 'ember-power-calendar-selectors/components/power-calendar-selector/multiple/component';
 import Months from '../months';
-import { get, getProperties } from '@ember/object';
+import { getProperties } from '@ember/object';
 
 /**
  * Months multiple selection component concrete class.
@@ -12,48 +12,30 @@ import { get, getProperties } from '@ember/object';
 export default PowerCalendarSelectorMultiple.extend(Months).extend({
   actions: {
     /**
-     * On month selection.
+     * @action select - fired on date selection
      * 
-     * @action
-     * @param {Object} month 
+     * @param {Object} dateObj 
      * @param {Object} calendar 
      * @param {Event} ev 
+     * @override
      */
-    selectMonth(month, calendar, ev) {
-      const onSelectMonth = get(this, 'publicAPI.onSelectMonth');
-
+    select(dateObj, calendar, ev) {
       const {
-        'actions.select': select,
-        selected
-      } = getProperties(calendar,
-        'actions.select',
-        'selected'
+        'publicAPI.calendar.actions.select': select,
+        'publicAPI.onSelect': onSelect,
+      } = getProperties(this,
+        'publicAPI.calendar.actions.select',
+        'publicAPI.onSelect',
       );
 
-      if (onSelectMonth) 
-        onSelectMonth(this._buildCollection({ date: selected }, month), calendar, ev);
-      else if (select)
-        select(month, calendar, ev);
+      switch (dateObj.period) {
+        case "quarter":
+          if (onSelect) onSelect(dateObj, calendar, ev);
+          if (select) select(dateObj.months, calendar, ev);
+          break;
+        default: 
+          this._super(...arguments);
+      }
     },
-
-    /**
-     * On quarter selection.
-     * 
-     * @action
-     * @param {Object} quarter 
-     * @param {Object} calendar 
-     * @param {Event} ev 
-     */
-    selectQuarter(quarter, calendar, ev) {
-      const onSelectQuarter = get(this, 'publicAPI.onSelectQuarter');
-      const selected = get(calendar, 'selected');
-
-      if (onSelectQuarter)
-        onSelectQuarter(
-          quarter.months.reduce(this._buildCollection.bind(this), { date: selected }), 
-          calendar, 
-          ev,
-        );
-    }
-  }
+  },
 });

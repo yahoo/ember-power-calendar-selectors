@@ -11,6 +11,6 @@ export default function isCalendar(context, calendar, message) {
     result,
     actual: result,
     expected: true,
-    message
+    message,
   });
 }

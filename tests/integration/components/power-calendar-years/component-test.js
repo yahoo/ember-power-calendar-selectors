@@ -20,7 +20,7 @@ module('Integration | Component | power-calendar-years', function(hooks) {
         moveCenter: () => {},
         select: () => {},
       },
-      type: 'single'
+      type: 'single',
     };
   });
 
@@ -34,12 +34,12 @@ module('Integration | Component | power-calendar-years', function(hooks) {
     await render(hbs`{{power-calendar-years calendar=calendar}}`);
     assert.equal(
       this.get('element').textContent.replace(/\s+/g, ' ').trim(), 
-      '2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020'
+      '2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020',
     );
   });
 
   test('Clicking one day or year triggers call of `onSelect` action with that correct arugments', async function(assert) {
-    assert.expect(4);
+    assert.expect(8);
     this.set('didChange', function(year, calendar, e) {
       assert.isYear(year, 'The first argument is a year object');
       assert.isCalendar(calendar, 'The second argument is the calendar\'s public API');
@@ -49,7 +49,7 @@ module('Integration | Component | power-calendar-years', function(hooks) {
     await render(hbs`
       {{#power-calendar onSelect=(action didChange) as |calendar|}}
         {{calendar.nav}}
-        {{power-calendar-years calendar=calendar}}
+        {{power-calendar-years onSelect=(action didChange) calendar=calendar}}
       {{/power-calendar}}
     `);
     await click('.ember-power-calendar-selector-year[data-date="2013"]');
@@ -135,7 +135,7 @@ module('Integration | Component | power-calendar-years', function(hooks) {
     assert.expect(8);
     this.disabledDates = [
       new Date(2015, 0),
-      new Date(2016, 0)
+      new Date(2016, 0),
     ];
 
     await render(hbs`

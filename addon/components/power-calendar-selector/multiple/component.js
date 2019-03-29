@@ -4,7 +4,7 @@
 
 import { get } from '@ember/object';
 import fallbackIfUndefined from 'ember-power-calendar/utils/computed-fallback-if-undefined';
-import { isSame, normalizeMultipleActionValue } from 'ember-power-calendar-utils';
+import { isSame } from 'ember-power-calendar-utils';
 import PowerCalendarSelector from '../component';
 
 /**
@@ -50,28 +50,4 @@ export default PowerCalendarSelector.extend({
     
     return this._super(...arguments) || (numSelected >= maxLength && !this.isSelected(date));
   },
-
-  /**
-   * Used in a reduction to build multiselections
-   * 
-   * @method _buildCollection
-   * @param {*} acc
-   * @param {*} periodObj
-   * @returns {Obejct}
-   * @private
-   */
-  _buildCollection({ date: _selected } = {}, { date }) {
-    const period = get(this, 'period');
-    const selected = _selected || [];
-    const index = selected.findIndex(s => isSame(date, s, period));
-
-    let values = [];
-    if (index === -1) {
-      values = [...selected, date];
-    } else {
-      values = [...selected.slice(0, index), ...selected.slice(index + 1)];
-    }
-
-    return normalizeMultipleActionValue({ date: values });
-  }
 });

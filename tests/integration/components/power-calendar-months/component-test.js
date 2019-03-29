@@ -33,7 +33,7 @@ module('Integration | Component | power-calendar-months', function(hooks) {
     await render(hbs`{{power-calendar-months calendar=calendar}}`);
     assert.equal(
       this.get('element').textContent.replace(/\s+/g, ' ').trim(), 
-      'Q1 Q2 Q3 Q4 Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'
+      'Q1 Q2 Q3 Q4 Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec',
     );
   });
 });

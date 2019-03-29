@@ -13,7 +13,7 @@ import {
   isAfter,
   isBefore,
   isSame,
-  normalizeCalendarDay
+  normalizeCalendarDay,
 } from 'ember-power-calendar-utils';
 
 
@@ -52,6 +52,26 @@ export default Component.extend({
 
   actions: {
     /**
+     * @action select - fired on date selection
+     * 
+     * @param {Object} dateObj 
+     * @param {Object} calendar 
+     * @param {Event} ev 
+     */
+    select(...args) {
+      const {
+        'publicAPI.calendar.actions.select': select,
+        'publicAPI.onSelect': onSelect,
+      } = getProperties(this,
+        'publicAPI.calendar.actions.select',
+        'publicAPI.onSelect',
+      );
+
+      if (onSelect) onSelect(...args);
+      if (select) select(...args);
+    },
+
+    /**
      * Action run on year focus.
      * 
      * @action
@@ -68,7 +88,7 @@ export default Component.extend({
      */
     blur() {
       scheduleOnce('actions', this, this.get('_updateFocused'), null);
-    }
+    },
   },
 
   /**
@@ -134,7 +154,7 @@ export default Component.extend({
       'publicAPI.disabledDates': disabledDates,
       'publicAPI.maxDate': maxDate,
       'publicAPI.minDate': minDate,
-      period
+      period,
     } = getProperties(this, 
       'period',
       'publicAPI.disabledDates',
@@ -186,5 +206,5 @@ export default Component.extend({
     if (el) {
       el.focus();
     }
-  }
+  },
 });

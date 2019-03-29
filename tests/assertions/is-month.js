@@ -12,6 +12,6 @@ export default function isMonth(context, month, message = 'Is a valid day object
     result,
     actual: result,
     expected: true,
-    message
+    message,
   });
 }

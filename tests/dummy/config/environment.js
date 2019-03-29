@@ -7,7 +7,7 @@ module.exports = function(environment) {
     rootURL: '/',
     locationType: 'auto',
     moment: {
-      includeLocales: ['en', 'es', 'ru', 'fr', 'pt']
+      includeLocales: ['en', 'es', 'ru', 'fr', 'pt'],
     },
     EmberENV: {
       FEATURES: {
@@ -16,14 +16,14 @@ module.exports = function(environment) {
       },
       EXTEND_PROTOTYPES: {
         // Prevent Ember Data from overriding Date.parse.
-        Date: false
-      }
+        Date: false,
+      },
     },
 
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-    }
+    },
   };
 
   if (environment === 'development') {

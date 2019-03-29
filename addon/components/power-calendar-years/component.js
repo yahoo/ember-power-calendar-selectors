@@ -33,7 +33,7 @@ export default Component.extend({
     maxDate: PropTypes.date,
     maxLength: PropTypes.any,
     minDate: PropTypes.date,
-    onSelectYear: PropTypes.func,
+    onSelect: PropTypes.func,
     proximitySelection: PropTypes.bool,
-  }
+  },
 });

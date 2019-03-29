@@ -16,7 +16,7 @@ module.exports = function(/* environment, appConfig */) {
       validate: true,
     
       // Validate properties when they are updated (default is false)
-      validateOnUpdate: true
-    }
+      validateOnUpdate: true,
+    },
   };
 };

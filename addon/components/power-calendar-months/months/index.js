@@ -44,18 +44,18 @@ export default {
    */
   _quarters: computed(
     'focusedId',
-    'publicAPI.{calendar,calendar.seleted.[],minDate,maxDate,disabledDates.[],onSelect,onSelectQuarter,firstQuarter,maxLength}',
+    'publicAPI.{calendar,calendar.seleted.[],minDate,maxDate,disabledDates.[],onSelect,firstQuarter,maxLength}',
     function() {
       const {
         'publicAPI.calendar': calendar,
         period,
         powerCalendarService,
-        rowWidth
+        rowWidth,
       } = getProperties(this, 
         'period', 
         'powerCalendarService', 
         'publicAPI.calendar',
-        'rowWidth'
+        'rowWidth',
       );
 
       const thisMonth = powerCalendarService.getDate();
@@ -83,60 +83,16 @@ export default {
    * 
    * @property {Boolean} _monthsInteractive
    */
-  _monthsInteractive: computed.or('publicAPI.{onSelectMonth,calendar.actions.select}'),
+  _monthsInteractive: computed.or('publicAPI.{onSelect,calendar.actions.select}'),
 
   /**
    * Should the quarters be interactive?
    * 
    * @property {Boolean} _quartersInteractive
    */
-  _quartersInteractive: computed.or('publicAPI.onSelectQuarter'),
+  _quartersInteractive: computed.or('publicAPI.onSelect'),
 
   actions: {
-    /**
-     * @action selectMonth - fired on month selection
-     * 
-     * @param {Object} month 
-     * @param {Object} calendar 
-     * @param {Event} ev 
-     */
-    selectMonth(...args) {
-      const { 
-        'publicAPI.calendar.actions.select': select,
-        'publicAPI.onSelectMonth': onSelectMonth
-      } = getProperties(this, 
-        'publicAPI.calendar.actions.select',
-        'publicAPI.onSelectMonth'
-      );
-
-      if (onSelectMonth) 
-        onSelectMonth(...args);
-      else if (select)
-        select(...args);
-    },
-
-    /**
-     * @action selectQuarter - fired on quarter selection
-     * 
-     * @param {Object} quarter 
-     * @param {Object} calendar 
-     * @param {Event} ev 
-     */
-    selectQuarter(...args) {
-      const {
-        'publicAPI.calendar.actions.select': select,
-        'publicAPI.onSelectQuarter': onSelectQuarter
-      } = getProperties(this, 
-        'publicAPI.calendar.actions.select',
-        'publicAPI.onSelectQuarter'
-      );
-
-      if (onSelectQuarter) 
-        onSelectQuarter(...args);
-      else if (select)
-        select(...args);
-    },
-
     /**
      * @action keyDown - Handles arrow navigation with focus
      * @param {Object} calendar 
@@ -146,11 +102,11 @@ export default {
       const {
         _quarters: quarters,
         focusedId,
-        rowWidth
+        rowWidth,
       } = getProperties(this,
         '_quarters',
         'focusedId',
-        'rowWidth'
+        'rowWidth',
       );
 
       if (focusedId) {
@@ -254,7 +210,7 @@ export default {
       isDisabled: this.isQuarterDisabled(months),
       months,
       period: 'quarter',
-      date: months[0].date
+      date: months[0].date,
     };
   },
 
@@ -278,8 +234,6 @@ export default {
   isQuarterDisabled() {
     return false;
   },
-  
-  
 
   /**
    * Returns the start of the first month of the centered year.

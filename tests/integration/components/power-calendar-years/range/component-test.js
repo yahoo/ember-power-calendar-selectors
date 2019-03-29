@@ -19,7 +19,7 @@ module('Integration | Component | power-calendar-years/range', function(hooks) {
       actions: {
         moveCenter: () => {},
         select: () => {},
-      }
+      },
     };
   });
 
@@ -37,7 +37,7 @@ module('Integration | Component | power-calendar-years/range', function(hooks) {
 
     assert.equal(
       this.get('element').textContent.replace(/\s+/g, ' ').trim(), 
-      '2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020'
+      '2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020',
     );
   });
 
@@ -62,11 +62,11 @@ module('Integration | Component | power-calendar-years/range', function(hooks) {
     assert.ok(allYearsInRangeAreSelected, 'All years in range are selected');
     assert.dom('.ember-power-calendar-selector-year[data-date="2016"]').hasClass(
       'ember-power-calendar-selector-year--range-start',
-      'The start of the range has a special class'
+      'The start of the range has a special class',
     );
     assert.dom('.ember-power-calendar-selector-year[data-date="2020"]').hasClass(
       'ember-power-calendar-selector-year--range-end',
-      'The end of the range has a special class'
+      'The end of the range has a special class',
     );
   }); 
 });

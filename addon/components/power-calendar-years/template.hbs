@@ -1,21 +1,21 @@
 {{!-- Copyright (c) 2018 Oath Inc. --}}
 
-{{#let  
-  (concat "power-calendar-years/" attrs.calendar.type) 
+{{#let
+  (concat "power-calendar-years/" calendar.type)
   (hash
-    calendar=attrs.calendar
-    disabledDates=attrs.disabledDates
+    calendar=calendar
+    disabledDates=disabledDates
     format=format
-    maxDate=attrs.maxDate
-    maxLength=attrs.maxLength
-    minDate=attrs.minDate
-    onSelectYear=attrs.onSelectYear
-    proximitySelection=attrs.proximitySelection
+    maxDate=maxDate
+    maxLength=maxLength
+    minDate=minDate
+    onSelect=onSelect
+    proximitySelection=proximitySelection
   )
   as |componentName publicAPI|}}
   {{#if hasBlock}}
-    {{#component componentName publicAPI=publicAPI as |year calendar|}}
-      {{yield year calendar}}
+    {{#component componentName publicAPI=publicAPI as |year childCalendar|}}
+      {{yield year childCalendar}}
     {{/component}}
   {{else}}
     {{component componentName publicAPI=publicAPI}}
