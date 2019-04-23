@@ -1,0 +1,21 @@
+{{!-- Copyright (c) 2019 Oath Inc. --}}
+
+<nav class="ember-power-calendar-selector-nav">
+  {{#if calendar.actions.moveCenter}}
+    <button type="button" class="ember-power-calendar-selector-nav-control ember-power-calendar-selector-nav-control--previous" onclick={{action "move" -1}}>«</button>
+  {{/if}}
+  <div class="ember-power-calendar-selector-nav-title">
+    {{#if hasBlock}}
+      {{yield calendar}}
+    {{else}}
+      {{#if (eq by "decade")}}
+        {{decade}}'s
+      {{else}}
+        {{power-calendar-format-date calendar.center dateFormat locale=calendar.locale}}
+      {{/if}}
+    {{/if}}
+  </div>
+  {{#if calendar.actions.moveCenter}}
+    <button type="button" class="ember-power-calendar-selector-nav-control ember-power-calendar-selector-nav-control--next" onclick={{action "move" 1}}>»</button>
+  {{/if}}
+</nav>

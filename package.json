@@ -23,7 +23,8 @@
   "dependencies": {
     "ember-cli-babel": "^6.16.0",
     "ember-cli-htmlbars": "^3.0.0",
-    "ember-prop-types": "^7.0.4"
+    "ember-prop-types": "^7.0.4",
+    "ember-truth-helpers": "^2.1.0"
   },
   "devDependencies": {
     "@ember/optional-features": "^0.6.3",

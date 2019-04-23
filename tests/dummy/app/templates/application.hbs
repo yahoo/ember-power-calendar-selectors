@@ -2,7 +2,10 @@
   onSelect=(action (mut selected) value="date")
   locale="en"
   selected=selected
+  center=center
+  onCenterChange=(action (mut center) value="date")
 as |calendar|
 }}
+  {{power-calendar-selectors-nav calendar=calendar by="decade"}}
   {{power-calendar-months calendar=calendar onSelect=(action (mut selected) value="date")}}
 {{/power-calendar-range}}
