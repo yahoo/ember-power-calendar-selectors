@@ -1,10 +1,27 @@
-ember-power-calendar-selectors
-==============================================================================
+# ember-power-calendar-selectors
+> Provides additional date selection components for [`ember-power-calendar`](https://ember-power-calendar.com/)
 
-Provides additional date selection components for [`ember-power-calendar`](https://ember-power-calendar.com/)
+This project provides alternative date selection components that integrate with ember-power-calendar 
+seamlessly.  Currently a months selector (for selecting over years) and a years selector (for 
+selecting over decades) are implemented.
 
-Installation
-------------------------------------------------------------------------------
+## Table of Content
+
+- [Background](#background)
+- [Install](#install)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [Security](#security)
+- [API](#api)
+- [Contribute](#contribute)
+- [License](#license)
+
+## Background
+
+`ember-power-calendar-selectors` was created to allow for more natural selection of dates in the month, quarter, and year
+time grains.  It only uses the `ember-power-calendar` public API via the yeilded `calendar` object.
+
+## Install
 
 First install [`ember-cli-less`](https://github.com/gpoitch/ember-cli-less), `ember-power-calendar`, and 
 `ember-power-calendar-selectors`.  Currently `ember-power-calendar-selectors` only supports `less` style imports
@@ -29,12 +46,35 @@ for example in `app/styles/app.less`
 The above will style all `.ember-power-calendar`s the same, feel free to 
 use custom class names.
 
-Usage
-------------------------------------------------------------------------------
+## Configuration
 
-## Years Selector
+Beyond [Installation](#install), this project does not require other config.  Various scss variables can be set
+on the ember power calendar selectors mixin to change it the selector's look and feel if desired.
+
+## Usage
+
+Usage of `ember-power-calendar-selectors` components is nearly the same as the default `ember-power-calendar`
+`calendar.days` component.  The main difference is that the `calendar` object yielded by `power-calendar` must
+be passed into the new `ember-power-calendar-selectors` selection components.
+
+For example, here is an example of how to render a non-interactive years selector.
+```hbs
+{{#power-calendar as |calendar|}}
+  {{power-calendar-years calendar=calendar}}
+{{/power-calendar}}
+```
+
+For more details see the [API](#api).
+
+## Security
+
+This project doesn't have any security concerns. 
+
+## API
+
+### Years Selector
 The `ember-power-calendar-selectors` addon provides the `power-calendar-months`, and `power-calendar-years` selector
-components which work similarly to the `power-calendar`'s native `calendar.days` yeilded component.  It renders selectors for all the years in a decade.
+components which work similarly to the `power-calendar`'s native `calendar.days` yielded component.  It renders selectors for all the years in a decade.
 
 For example, here is an example of how to render a non-interactive years selector.
 ```hbs
@@ -95,10 +135,10 @@ Finally, selector behavior has been implemented for all the `power-calendar` sel
 ```
 will work without further tweaking, as will `power-calendar-multiple`.
 
-## Months Selector
+### Months Selector
 The `power-calendar-months` component renders with selectors for the 12 months in a year and the quarters by default. It shares most of its API with `power-calendar-years` with a few notable exceptions.
 
-### `fisrtQuarter`
+#### `fisrtQuarter`
 `firstQuarter` specifies the starting label of the first quarter. Defaults to `1`.
 ```hbs
 {{#power-calendar
@@ -111,7 +151,7 @@ The `power-calendar-months` component renders with selectors for the 12 months i
 ```
 will render with the first quarter of the year as Q2.
 
-### `showQuarters`
+#### `showQuarters`
 Determines if the quarters should be rendered.  Defaults `true`.
 ```hbs
 {{#power-calendar
@@ -125,7 +165,7 @@ Determines if the quarters should be rendered.  Defaults `true`.
 will not render with quarters, only months.
 
 
-## Selectors Nav
+### Selectors Nav
 It also provides the `power-calendar-selectors-nav` component.  This component can
 be used as a more convenient nav for the months, and years selector.
 
@@ -143,7 +183,7 @@ provide custom date format strings.  We use [moment.js format strings](https://m
 {{/power-calendar}}
 ```
 
-## onSelect Handler
+### onSelect Handler
 
 All default behaviors can be handled through the power-calendar `onSelect` handler hook, just as in base ember power calendar.  For instance,
 
@@ -197,33 +237,13 @@ In the case that both hooks are used all registered handlers fire in order of sp
 {{/power-calendar-range}}
 ```
 
-Contributing
-------------------------------------------------------------------------------
+## Contribute
 
-### Installation
+Please refer to [the contributing.md file](Contributing.md) for information about how to get involved. We welcome issues, questions, and pull requests. Pull Requests are welcome.
 
-* `git clone <repository-url>`
-* `cd ember-power-calendar-selectors`
-* `npm install`
+## Maintainers
 
-### Linting
-
-* `yarn lint:hbs`
-* `yarn lint:js`
-* `yarn lint:js --fix`
-
-### Running tests
-
-* `ember test` – Runs the test suite on the current Ember version
-* `ember test --server` – Runs the test suite in "watch mode"
-* `ember try:each` – Runs the test suite against multiple Ember versions
-
-### Running the dummy application
-
-* `ember serve`
-* Visit the dummy application at [http://localhost:4200](http://localhost:4200).
-
-For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+Alex Aralis: alex.aralis@verizonmedia.com
 
 ## License
 
