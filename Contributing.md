@@ -19,9 +19,9 @@ If you simply have a question that needs an answer, [create an issue](https://he
 
 ### Linting
 
-* `yarn lint:hbs`
-* `yarn lint:js`
-* `yarn lint:js --fix`
+* `npm run lint:hbs`
+* `npm run lint:js`
+* `npm run lint:js --fix`
 
 ### Running tests
 

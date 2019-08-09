@@ -1,11 +1,11 @@
-{{!-- Copyright (c) 2018 Oath Inc. --}}
+{{!-- Copyright 2019, Oath Inc. Licensed under the terms of the MIT license. See accompanying LICENSE.md file for terms. --}}
 
 {{! template-lint-disable invalid-interactive }}
 <div class="ember-power-calendar-selector-year-grid" onkeydown={{action "keyDown" publicAPI.calendar}}>
   {{#each _years key="id" as |year|}}
     <button
       type="button"
-      data-date="{{year.id}}"
+      data-date={{year.id}}
       class="
         ember-power-calendar-selector-year
         {{if _interactive "ember-power-calendar-selector-year--interactive"}}

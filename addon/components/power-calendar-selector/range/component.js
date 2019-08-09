@@ -1,5 +1,7 @@
 /**
- * Copyright (c) 2018 Oath Inc.
+ * Copyright 2019, Oath Inc.
+ * Licensed under the terms of the MIT license.
+ * Please see LICENSE file in the project root for terms
  */
 
 import { get, getProperties } from '@ember/object';

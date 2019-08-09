@@ -1,9 +1,10 @@
+{{!-- Copyright 2019, Oath Inc. Licensed under the terms of the MIT license. See accompanying LICENSE.md file for terms. --}}
 {{! template-lint-disable invalid-interactive }}
 {{#if publicAPI.showQuarters}}
   <div class="ember-power-calendar-selector-quarters">
     {{#each _quarters key="id" as |quarter|}}
       <button
-        data-date="{{quarter.id}}"
+        data-date={{quarter.id}}
         onclick={{action "select" quarter publicAPI.calendar}}
         class="
           ember-power-calendar-selector-quarter
@@ -22,7 +23,7 @@
     <div class="ember-power-calendar-selector-month-row ember-power-calendar-selector-month-row--quarter">
       {{#each quarter.months key="id" as |month|}}
         <button type="button"
-          data-date="{{month.id}}"
+          data-date={{month.id}}
           class="
             ember-power-calendar-selector-month
             {{if _monthsInteractive "ember-power-calendar-selector-month--interactive"}}
