@@ -1,7 +1,6 @@
 /**
  * Copyright 2019, Oath Inc.
  * Licensed under the terms of the MIT license.
- * Please see LICENSE file in the project root for terms
  */
 import { computed, set, get, getProperties } from '@ember/object';
 import { scheduleOnce } from '@ember/runloop';
