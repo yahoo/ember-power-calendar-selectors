@@ -1,0 +1,1 @@
+export { default } from 'ember-power-calendar-selectors/components/private-let/component';

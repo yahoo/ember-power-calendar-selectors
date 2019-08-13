@@ -1,6 +1,6 @@
 {{!-- Copyright 2019, Oath Inc. Licensed under the terms of the MIT license. See accompanying LICENSE.md file for terms. --}}
 
-{{#let
+{{#private-let
   (concat "power-calendar-years/" calendar.type)
   (hash
     calendar=calendar
@@ -20,4 +20,4 @@
   {{else}}
     {{component componentName publicAPI=publicAPI}}
   {{/if}}
-{{/let}}
+{{/private-let}}
