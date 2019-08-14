@@ -2,14 +2,12 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { assertionInjector, assertionCleanup } from 'dummy/tests/assertions';
 
 let calendarService, calendar, center;
 module('Integration | Component | power-calendar-years/multiple', function(hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function() {
-    assertionInjector(this);
     center = new Date(2010, 0);
     calendarService = this.get('owner').lookup('service:power-calendar');
     calendarService.set('date', new Date(2013, 9, 18));
@@ -24,10 +22,6 @@ module('Integration | Component | power-calendar-years/multiple', function(hooks
     };
   });
 
-  hooks.afterEach(function() {
-    assertionCleanup(this);
-  });
-
   test('it renders', async function(assert) {
     this.set('calendar', calendar);
 
@@ -39,7 +33,7 @@ module('Integration | Component | power-calendar-years/multiple', function(hooks
     `);
 
     assert.equal(
-      this.get('element').textContent.replace(/\s+/g, ' ').trim(), 
+      this.get('element').textContent.replace(/\s+/g, ' ').trim(),
       '2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020',
     );
   });
@@ -79,7 +73,7 @@ module('Integration | Component | power-calendar-years/multiple', function(hooks
         )}}
       {{/power-calendar-multiple}}
     `);
-    
+
     await click('.ember-power-calendar-selector-year[data-date="2014"]');
     assert.dom('.ember-power-calendar-selector-year[data-date="2014"]').isNotDisabled();
     assert.dom('.ember-power-calendar-selector-year[data-date="2016"]').isDisabled();
