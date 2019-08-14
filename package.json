@@ -46,20 +46,21 @@
     "ember-export-application-global": "^2.0.0",
     "ember-load-initializers": "^1.1.0",
     "ember-maybe-import-regenerator": "^0.1.6",
-    "ember-power-calendar": "~0.10.3",
+    "ember-power-calendar": "~0.13.3",
     "ember-power-calendar-moment": "^0.1.3",
     "ember-resolver": "^5.0.1",
-    "ember-source": "https://s3.amazonaws.com/builds.emberjs.com/release/shas/c0871674da843794366c57e7bf9a20245d6142f2.tgz",
+    "ember-source": "~3.11.0",
     "ember-source-channel-url": "^1.1.0",
     "ember-truth-helpers": "^2.1.0",
     "ember-try": "^1.0.0",
     "eslint-plugin-ember": "^5.2.0",
     "eslint-plugin-node": "^7.0.1",
     "loader.js": "^4.7.0",
-    "qunit-dom": "^0.7.1"
+    "qunit-dom": "^0.7.1",
+    "@ember/jquery": "^0.5.1"
   },
   "peerDependencies": {
-    "ember-power-calendar": "~0.10.3"
+    "ember-power-calendar": "^0.10.3"
   },
   "engines": {
     "node": "6.* || 8.* || >= 10.*"
