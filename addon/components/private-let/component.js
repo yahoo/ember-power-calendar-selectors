@@ -1,3 +1,9 @@
+/**
+ * Copyright 2019, Oath Inc.
+ * Licensed under the terms of the MIT license.
+ * Please see LICENSE file in the project root for terms
+ */
+
 import Component from '@ember/component';
 import layout from './template';
 
