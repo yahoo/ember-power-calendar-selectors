@@ -7,20 +7,30 @@ module('Integration | Component | private-let', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
-
     await render(hbs`{{private-let}}`);
+    assert.equal(
+      this.element.textContent.trim(),
+      '',
+      'it renders totally empty when nothing is provided',
+    );
 
-    assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
     await render(hbs`
-      {{#private-let}}
-        template block text
+      {{#private-let
+        "a_string"
+        (hash dog="cat")
+        false
+        as | str obj falsy |
+      }}
+        {{str}}
+        {{obj.dog}}
+        {{falsy}}
       {{/private-let}}
     `);
 
-    assert.equal(this.element.textContent.trim(), 'template block text');
+    assert.equal(
+      this.element.textContent.trim().replace(/\s+/g, ' '),
+      'a_string cat false',
+      'when passed positional props they are yeilded back, including falsy values.',
+    );
   });
 });
