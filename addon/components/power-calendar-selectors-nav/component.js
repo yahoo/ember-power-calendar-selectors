@@ -4,7 +4,7 @@
  * Please see LICENSE file in the project root for terms
  */
 
-import { computed } from '@ember/object';
+import { computed, getProperties } from '@ember/object';
 import { PropTypes } from 'ember-prop-types';
 import Component from '@ember/component';
 import fallbackIfUndefined from 'ember-power-calendar/utils/computed-fallback-if-undefined';
@@ -42,7 +42,7 @@ export default Component.extend({
 
   actions: {
     move(units) {
-      const { by, calendar } = this;
+      const { by, calendar } = getProperties(this, 'by', 'calendar');
 
       if (by === 'decade') {
         calendar.actions.moveCenter(10 * units, 'year', calendar);

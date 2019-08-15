@@ -3,14 +3,13 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, triggerKeyEvent, click, focus } from '@ember/test-helpers';
 import { run } from '@ember/runloop';
 import hbs from 'htmlbars-inline-precompile';
-import { assertionInjector, assertionCleanup } from 'dummy/tests/assertions';
+import { isCalendar, isYear } from 'dummy/tests/helpers/assertions';
 
 let calendarService, calendar;
 module('Integration | Component | power-calendar-years', function(hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function() {
-    assertionInjector(this);
     calendarService = this.get('owner').lookup('service:power-calendar');
     calendarService.set('date', new Date(2013, 9, 18));
     calendar = {
@@ -24,16 +23,12 @@ module('Integration | Component | power-calendar-years', function(hooks) {
     };
   });
 
-  hooks.afterEach(function() {
-    assertionCleanup(this);
-  });
-
   test('it renders', async function(assert) {
     this.set('calendar', calendar);
 
     await render(hbs`{{power-calendar-years calendar=calendar}}`);
     assert.equal(
-      this.get('element').textContent.replace(/\s+/g, ' ').trim(), 
+      this.get('element').textContent.replace(/\s+/g, ' ').trim(),
       '2009 2010 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020',
     );
   });
@@ -41,8 +36,8 @@ module('Integration | Component | power-calendar-years', function(hooks) {
   test('Clicking one day or year triggers call of `onSelect` action with that correct arugments', async function(assert) {
     assert.expect(8);
     this.set('didChange', function(year, calendar, e) {
-      assert.isYear(year, 'The first argument is a year object');
-      assert.isCalendar(calendar, 'The second argument is the calendar\'s public API');
+      assert.ok(isYear(year), 'The first argument is a year object');
+      assert.ok(isCalendar(calendar), 'The second argument is the calendar\'s public API');
       assert.ok(e instanceof Event, 'The third argument is an event');
       assert.equal(year.id, '2013', 'id matches clicked element');
     });

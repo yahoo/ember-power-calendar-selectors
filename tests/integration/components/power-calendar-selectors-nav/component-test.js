@@ -2,14 +2,12 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { click, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { assertionInjector, assertionCleanup } from 'dummy/tests/assertions';
 
 let calendarService, calendar;
 module('Integration | Component | power-calendar-selectors-nav', function(hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function() {
-    assertionInjector(this);
     calendarService = this.owner.lookup('service:power-calendar');
     calendarService.set('date', new Date(2013, 9, 18));
     calendar = {
@@ -20,10 +18,6 @@ module('Integration | Component | power-calendar-selectors-nav', function(hooks)
         select: () => {},
       },
     };
-  });
-
-  hooks.afterEach(function() {
-    assertionCleanup(this);
   });
 
   test('it renders', async function(assert) {

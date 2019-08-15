@@ -2,7 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, click, triggerKeyEvent, focus } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { assertionInjector, assertionCleanup } from 'dummy/tests/assertions';
+import { isMonth, isCalendar, isQuarter } from 'dummy/tests/helpers/assertions';
 import { run } from '@ember/runloop';
 
 let calendarService, calendar;
@@ -10,7 +10,6 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function() {
-    assertionInjector(this);
     calendarService = this.get('owner').lookup('service:power-calendar');
     calendarService.set('date', new Date(2013, 9, 18));
     calendar = {
@@ -23,27 +22,23 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
     };
   });
 
-  hooks.afterEach(function() {
-    assertionCleanup(this);
-  });
-
   test('[i18n] The name of the months respect the locale set in the calendar service', async function(assert) {
     this.set('center', new Date(2016, 10, 15));
     calendarService.set('locale', 'fr');
 
     await render(hbs`
       {{#power-calendar center=center as |calendar|}}
-        {{power-calendar-months/single publicAPI=(hash 
-          calendar=calendar 
-          firstQuarter=1 
-          format="MMM" 
+        {{power-calendar-months/single publicAPI=(hash
+          calendar=calendar
+          firstQuarter=1
+          format="MMM"
           showQuarters=true
         )}}
       {{/power-calendar}}
     `);
 
     assert.equal(
-      this.get('element').querySelector('.ember-power-calendar-selector-month-grid').textContent.replace(/\s+/g, ' ').trim(), 
+      this.get('element').querySelector('.ember-power-calendar-selector-month-grid').textContent.replace(/\s+/g, ' ').trim(),
       'janv. févr. mars avr. mai juin juil. août sept. oct. nov. déc.',
     );
 
@@ -54,22 +49,22 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
     this.calendar = calendar;
 
     await render(hbs`
-      {{power-calendar-months/single publicAPI=(hash 
-        calendar=calendar 
-        firstQuarter=1 
-        format="MMM" 
+      {{power-calendar-months/single publicAPI=(hash
+        calendar=calendar
+        firstQuarter=1
+        format="MMM"
         showQuarters=true
       )}}`,
     );
 
     assert.equal(
-      this.get('element').querySelector('.ember-power-calendar-selector-month-grid').textContent.replace(/\s+/g, ' ').trim(), 
+      this.get('element').querySelector('.ember-power-calendar-selector-month-grid').textContent.replace(/\s+/g, ' ').trim(),
       'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec',
     );
 
     run(() => this.set('calendar.locale', 'es'));
     assert.equal(
-      this.get('element').querySelector('.ember-power-calendar-selector-month-grid').textContent.replace(/\s+/g, ' ').trim(), 
+      this.get('element').querySelector('.ember-power-calendar-selector-month-grid').textContent.replace(/\s+/g, ' ').trim(),
       'ene. feb. mar. abr. may. jun. jul. ago. sep. oct. nov. dic.',
     );
   });
@@ -77,25 +72,25 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
   test('The format of the months can be changed passing `format="<format string>"`', async function(assert) {
     this.calendar = calendar;
     this.format = 'MM'
-    
+
     await render(hbs`
       {{power-calendar-months/single publicAPI=(hash
-        calendar=calendar 
-        firstQuarter=1 
-        format=format 
+        calendar=calendar
+        firstQuarter=1
+        format=format
         showQuarters=true
       )}}
     `);
 
     assert.equal(
-      this.get('element').querySelector('.ember-power-calendar-selector-month-grid').textContent.replace(/\s+/g, ' ').trim(), 
+      this.get('element').querySelector('.ember-power-calendar-selector-month-grid').textContent.replace(/\s+/g, ' ').trim(),
       '01 02 03 04 05 06 07 08 09 10 11 12',
       'Grid rendered with MM format.',
     );
 
     run(() => this.set('format', 'MMMM'));
     assert.equal(
-      this.get('element').querySelector('.ember-power-calendar-selector-month-grid').textContent.replace(/\s+/g, ' ').trim(), 
+      this.get('element').querySelector('.ember-power-calendar-selector-month-grid').textContent.replace(/\s+/g, ' ').trim(),
       'January February March April May June July August September October November December',
       'Grid rendered with MMM format.',
     );
@@ -105,10 +100,10 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
     assert.expect(1);
     this.calendar = calendar;
     await render(hbs`
-      {{power-calendar-months/single publicAPI=(hash 
-        calendar=calendar 
-        firstQuarter=1 
-        format=format 
+      {{power-calendar-months/single publicAPI=(hash
+        calendar=calendar
+        firstQuarter=1
+        format=format
         showQuarters=false
       )}}
     `);
@@ -122,10 +117,10 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
     this.firstQuarter = 1;
 
     await render(hbs`
-      {{power-calendar-months/single publicAPI=(hash 
-        calendar=calendar 
-        firstQuarter=firstQuarter 
-        format="MMM" 
+      {{power-calendar-months/single publicAPI=(hash
+        calendar=calendar
+        firstQuarter=firstQuarter
+        format="MMM"
         showQuarters=true
       )}}
     `);
@@ -144,10 +139,10 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
     this.calendar = calendar;
 
     await render(hbs`
-      {{power-calendar-months/single publicAPI=(hash 
-        calendar=calendar 
-        firstQuarter=1 
-        format="MMM" 
+      {{power-calendar-months/single publicAPI=(hash
+        calendar=calendar
+        firstQuarter=1
+        format="MMM"
         showQuarters=true
       )}}
     `);
@@ -156,12 +151,12 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
 
     this.set('handleQuarter', () => {});
     await render(hbs`
-      {{power-calendar-months/single publicAPI=(hash 
-        calendar=calendar 
-        firstQuarter=1 
-        format="MMM" 
+      {{power-calendar-months/single publicAPI=(hash
+        calendar=calendar
+        firstQuarter=1
+        format="MMM"
         onSelect=handleQuarter
-        showQuarters=true 
+        showQuarters=true
       )}}
     `);
 
@@ -170,7 +165,7 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
     this.set('calendar.actions.select', () => {});
     this.set('handleQuarter', () => {});
     await render(hbs`
-      {{power-calendar-months/single publicAPI=(hash 
+      {{power-calendar-months/single publicAPI=(hash
         calendar=calendar
         firstQuarter=1
         format="MMM"
@@ -185,8 +180,8 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
     assert.expect(16);
 
     this.set('didChange', function(month, calendar, e) {
-      assert.isMonth(month, 'The first argument is a month object');
-      assert.isCalendar(calendar, 'The second argument is the calendar\'s public API');
+      assert.ok(isMonth(month), 'The first argument is a month object');
+      assert.ok(isCalendar(calendar), 'The second argument is the calendar\'s public API');
       assert.ok(e instanceof Event, 'The third argument is an event');
       assert.equal(month.id, '2013-10', 'id matches clicked element');
     });
@@ -195,9 +190,9 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
       {{#power-calendar onSelect=(action didChange) as |calendar|}}
         {{power-calendar-months/single publicAPI=(hash
           calendar=calendar
-          firstQuarter=1 
-          format="MMM" 
-          showQuarters=true 
+          firstQuarter=1
+          format="MMM"
+          showQuarters=true
           onSelect=(action didChange)
         )}}
       {{/power-calendar}}
@@ -205,8 +200,8 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
     await click('.ember-power-calendar-selector-month[data-date="2013-10"]');
 
     this.set('didChange', function(quarter, calendar, e) {
-      assert.isQuarter(quarter, 'The first argument is a quarter object');
-      assert.isCalendar(calendar, 'The second argument is the calendar\'s public API');
+      assert.ok(isQuarter(quarter), 'The first argument is a quarter object');
+      assert.ok(isCalendar(calendar), 'The second argument is the calendar\'s public API');
       assert.ok(e instanceof Event, 'The third argument is an event');
       assert.equal(quarter.id, '2013-Q1', 'id matches clicked element');
     });
@@ -226,9 +221,9 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
         {{power-calendar-months/single publicAPI=(hash
           calendar=calendar
           disabledDates=disabledDates
-          firstQuarter=1 
-          format="MMM" 
-          showQuarters=true 
+          firstQuarter=1
+          format="MMM"
+          showQuarters=true
         )}}
       {{/power-calendar}}
     `);
@@ -253,11 +248,11 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
       {{#power-calendar onSelect=(action (mut selected) value="date")  selected=selected as |calendar|}}
         {{calendar.nav}}
         {{power-calendar-months/single publicAPI=(hash
-          calendar=calendar 
-          firstQuarter=1 
-          format="MMM" 
+          calendar=calendar
+          firstQuarter=1
+          format="MMM"
           minDate=minDate
-          showQuarters=true 
+          showQuarters=true
         )}}
       {{/power-calendar}}
     `);
@@ -279,11 +274,11 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
       {{#power-calendar onSelect=(action (mut selected) value="date") selected=selected as |calendar|}}
         {{calendar.nav}}
         {{power-calendar-months/single publicAPI=(hash
-          calendar=calendar 
-          firstQuarter=1 
-          format="MMM" 
+          calendar=calendar
+          firstQuarter=1
+          format="MMM"
           minDate=minDate
-          showQuarters=true 
+          showQuarters=true
         )}}
       {{/power-calendar}}
     `);
@@ -305,11 +300,11 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
       {{#power-calendar onSelect=(action (mut selected) value="date") selected=selected as |calendar|}}
         {{calendar.nav}}
         {{power-calendar-months/single publicAPI=(hash
-          calendar=calendar 
-          firstQuarter=1 
-          format="MMM" 
+          calendar=calendar
+          firstQuarter=1
+          format="MMM"
           maxDate=maxDate
-          showQuarters=true 
+          showQuarters=true
         )}}
       {{/power-calendar}}
     `);
@@ -330,11 +325,11 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
       {{#power-calendar onSelect=(action (mut selected) value="date") selected=selected as |calendar|}}
         {{calendar.nav}}
         {{power-calendar-months/single publicAPI=(hash
-          calendar=calendar 
-          firstQuarter=1 
-          format="MMM" 
+          calendar=calendar
+          firstQuarter=1
+          format="MMM"
           maxDate=maxDate
-          showQuarters=true 
+          showQuarters=true
         )}}
       {{/power-calendar}}
     `);
@@ -355,8 +350,8 @@ module('Integration | Component | power-calendar-months/single', function(hooks)
       {{#power-calendar selected=selected as |calendar|}}
         {{power-calendar-months/single publicAPI=(hash
           calendar=calendar
-          firstQuarter=1 
-          format="MMM" 
+          firstQuarter=1
+          format="MMM"
           showQuarters=true
         )}}
       {{/power-calendar}}
