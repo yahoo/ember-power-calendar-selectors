@@ -1,25 +1,25 @@
 {{!-- Copyright 2019, Oath Inc. Licensed under the terms of the MIT license. See accompanying LICENSE.md file for terms. --}}
 
 {{#with (concat "power-calendar-years/" calendar.type) as |componentName|}}
-{{#with
-  (hash
-    calendar=calendar
-    disabledDates=disabledDates
-    format=format
-    maxDate=maxDate
-    maxLength=maxLength
-    minDate=minDate
-    onSelect=onSelect
-    proximitySelection=proximitySelection
-  )
-  as |publicAPI|
-}}
-  {{#if hasBlock}}
-    {{#component componentName publicAPI=publicAPI as |year childCalendar|}}
-      {{yield year childCalendar}}
-    {{/component}}
-  {{else}}
-    {{component componentName publicAPI=publicAPI}}
-  {{/if}}
-{{/with}}
+  {{#with
+    (hash
+      calendar=calendar
+      disabledDates=disabledDates
+      format=format
+      maxDate=maxDate
+      maxLength=maxLength
+      minDate=minDate
+      onSelect=onSelect
+      proximitySelection=proximitySelection
+    )
+    as |publicAPI|
+  }}
+    {{#if hasBlock}}
+      {{#component componentName publicAPI=publicAPI as |year childCalendar|}}
+        {{yield year childCalendar}}
+      {{/component}}
+    {{else}}
+      {{component componentName publicAPI=publicAPI}}
+    {{/if}}
+  {{/with}}
 {{/with}}
