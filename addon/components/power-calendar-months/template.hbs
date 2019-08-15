@@ -1,8 +1,7 @@
 {{!-- Copyright 2019, Oath Inc. Licensed under the terms of the MIT license. See accompanying LICENSE.md file for terms. --}}
 
-{{#with
-  (concat "power-calendar-months/" calendar.type)
-  (hash
+{{#with (concat "power-calendar-months/" calendar.type) as |componentName|}}
+{{#with (hash
     calendar=calendar
     disabledDates=disabledDates
     firstQuarter=firstQuarter
@@ -13,8 +12,8 @@
     onSelect=onSelect
     proximitySelection=proximitySelection
     showQuarters=showQuarters
-  )
-  as |componentName publicAPI|}}
+  ) as |publicAPI|
+}}
   {{#if hasBlock}}
     {{#component componentName publicAPI=publicAPI as |month childCalendar|}}
       {{yield month childCalendar}}
@@ -22,4 +21,5 @@
   {{else}}
     {{component componentName publicAPI=publicAPI}}
   {{/if}}
+{{/with}}
 {{/with}}
