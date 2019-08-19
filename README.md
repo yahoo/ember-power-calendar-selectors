@@ -1,4 +1,4 @@
-# ember-power-calendar-selectors
+# ember-power-calendar-selectors [![Build Status](https://api.travis-ci.org/yahoo/ember-power-calendar-selectors.svg?branch=master)](https://travis-ci.org/yahoo/ember-power-calendar-selectors)
 > Provides additional date selection components for [`ember-power-calendar`](https://ember-power-calendar.com/)
 
 This project provides alternative date selection components that integrate with ember-power-calendar 
