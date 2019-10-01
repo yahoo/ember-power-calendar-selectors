@@ -14,7 +14,6 @@ module.exports = {
         process.env.CI ? '--no-sandbox' : null,
         process.env.CI ? null : '--crash-dumps-dir=/tmp',
         '--headless',
-        '--disable-gpu',
         '--disable-dev-shm-usage',
         '--disable-software-rasterizer',
         '--mute-audio',

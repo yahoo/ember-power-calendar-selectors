@@ -5,5 +5,5 @@ module.exports = {
 
   rules: {
     'attribute-indentation': false,
-  }
+  },
 };
