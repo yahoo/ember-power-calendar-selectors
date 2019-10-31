@@ -1,13 +1,15 @@
 {
   "name": "ember-power-calendar-selectors",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.1.0",
+  "description": "Ember Power Calendar Selectors Addon",
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "ember-power-calendar",
+    "ember-power-calendar-addon"
   ],
-  "repository": "",
+  "repository": "https://github.com/yahoo/ember-power-calendar-selectors",
   "license": "MIT",
-  "author": "",
+  "author": "Alex Aralis <alex.aralis@verizonmedia.com>",
   "directories": {
     "doc": "doc",
     "test": "tests"
