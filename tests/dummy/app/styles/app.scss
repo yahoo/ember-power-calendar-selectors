@@ -1,0 +1,7 @@
+@import "ember-power-calendar";
+@import "ember-power-calendar-selectors";
+
+.sass-styled {
+  @include ember-power-calendar($cell-size: 50px);
+  @include ember-power-calendar-selectors($cell-size: 50px);
+}

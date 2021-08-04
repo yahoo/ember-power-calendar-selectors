@@ -1,0 +1,12 @@
+<PowerCalendarRange
+  @onSelect={{action (mut selected) value="date"}}
+  @locale="en"
+  @selected={{this.selected}}
+  @center={{this.center}}
+  @onCenterChange={{action (mut center) value="date"}}
+  ...attributes
+  as |calendar|
+>
+  <PowerCalendarSelectorsNav @calendar={{calendar}} by="decade" />
+  <PowerCalendarMonths @calendar={{calendar}} @onSelect={{action (mut selected) value="date"}} />
+</PowerCalendarRange>

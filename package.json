@@ -39,7 +39,7 @@
     "ember-cli-eslint": "^5.0.0",
     "ember-cli-htmlbars-inline-precompile": "^2.1.0",
     "ember-cli-inject-live-reload": "^2.0.1",
-    "ember-cli-less": "^2.0.3",
+    "ember-cli-sass-less": "^0.0.1",
     "ember-cli-shims": "^1.2.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-template-lint": "^1.0.0-beta.3",
@@ -59,7 +59,8 @@
     "eslint-plugin-ember": "^7.1.0",
     "eslint-plugin-node": "^10.0.0",
     "loader.js": "^4.7.0",
-    "qunit-dom": "^0.9.0"
+    "qunit-dom": "^0.9.0",
+    "sass": "^1.37.5"
   },
   "peerDependencies": {
     "ember-power-calendar": "^0.10.3"
