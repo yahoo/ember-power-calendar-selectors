@@ -23,9 +23,8 @@ time grains.  It only uses the `ember-power-calendar` public API via the yeilded
 
 ## Install
 
-First install [`ember-cli-less`](https://github.com/gpoitch/ember-cli-less), `ember-power-calendar`, and 
-`ember-power-calendar-selectors`.  Currently `ember-power-calendar-selectors` only supports `less` style imports
-so `ember-cli-less` is required.
+First install [`ember-cli-less`](https://github.com/gpoitch/ember-cli-less) or [`ember-cli-sass`](https://github.com/adopted-ember-addons/ember-cli-sass), `ember-power-calendar`, and 
+`ember-power-calendar-selectors`
 ```shell
 ember install ember-cli-less ember-power-calendar ember-power-calendar-selectors
 ```
@@ -40,6 +39,17 @@ for example in `app/styles/app.less`
 .ember-power-calendar {
   .ember-power-calendar(@cell-size: 50px);
   .ember-power-calendar-selectors(@cell-size: 50px);
+}
+```
+
+or in `app/styles/app.scss`
+```scss
+@import "ember-power-calendar";
+@import "ember-power-calendar-selectors";
+
+.ember-power-calendar {
+  @include ember-power-calendar($cell-size: 50px);
+  @include ember-power-calendar-selectors($cell-size: 50px);
 }
 ```
 
@@ -59,9 +69,9 @@ be passed into the new `ember-power-calendar-selectors` selection components.
 
 For example, here is an example of how to render a non-interactive years selector.
 ```hbs
-{{#power-calendar as |calendar|}}
-  {{power-calendar-years calendar=calendar}}
-{{/power-calendar}}
+<PowerCalendar as |calendar|>
+  <PowerCalendarYears @calendar={{calendar}} />
+</PowerCalendar>
 ```
 
 For more details see the [API](#api).
@@ -78,60 +88,60 @@ components which work similarly to the `power-calendar`'s native `calendar.days`
 
 For example, here is an example of how to render a non-interactive years selector.
 ```hbs
-{{#power-calendar as |calendar|}}
-  {{power-calendar-years calendar=calendar}}
-{{/power-calendar}}
+<PowerCalendar as |calendar|>
+  <PowerCalendarYears @calendar={{calendar}} />
+</PowerCalendar>
 ```
 
 When an `onSelect` handler is provided to `power-calendar` the `power-calendar-years` selector becomes interactive and sends events to the handler.
 ```hbs
-{{#power-calendar 
-  selected=selected
-  onSelect=(action (mut selected) value="date") 
+<PowerCalendar 
+  @selected={{selected}}
+  @onSelect={{action (mut selected) value="date"}}
   as |calendar|
-}}
-  {{power-calendar-years calendar=calendar}}
-{{/power-calendar}}
+>
+  <PowerCalendarYears @calendar={{calendar}} />
+</PowerCalendar>
 ```
 
 All the options implemented by `calendar.days` have been reimplemented by `power-calendar-years` as well.  For example,
 ```hbs
-{{#power-calendar 
-  selected=selected
-  onSelect=(action (mut selected) value="date") 
-  minRange="2y"
-  maxRange="5y"
+<PowerCalendar 
+  @selected={{selected}}
+  @onSelect={{action (mut selected) value="date"}}
+  @minRange={{"2y"}}
+  @maxRange={{"5y"}}
   as |calendar|
-}}
-  {{power-calendar-years calendar=calendar}}
-{{/power-calendar}}
+>
+  <PowerCalendarYears @calendar={{calendar}} />
+</PowerCalendar>
 ```
 works as expected.  Be advised, `{min,max}Range` interpret `Number` values as days, no matter the subcomponent being rendered.  Pass in `"{number of years}y"` if the range should be specified in years as shown above.
 
 Also, selectors can be used in concert without issue.  For instance,
 ```hbs
-{{#power-calendar 
-  selected=selected
-  onSelect=(action (mut selected) value="date") 
-  minRange="2y"
-  maxRange="5y"
+<PowerCalendar 
+  @selected={{selected}}
+  onSelect={{action (mut selected) value="date"}}
+  @minRange={{"2y"}}
+  @maxRange={{"5y"}}
   as |calendar|
-}}
-  {{calendar.days}}
-  {{power-calendar-years calendar=calendar}}
-{{/power-calendar}}
+>
+  <calendar.days />
+  <PowerCalendarYears @calendar={{calendar}} />
+</PowerCalendar>
 ```
 will work without a problem.
 
 Finally, selector behavior has been implemented for all the `power-calendar` selection modes, single, range, and multiple. This,
 ```hbs
-{{#power-calendar-range
-  selected=selected
-  onSelect=(action (mut selected) value="date") 
+<PowerCalendarRange
+  @selected={{selected}}
+  @onSelect={{action (mut selected) value="date"}}
   as |calendar|
-}}
-  {{power-calendar-years calendar=calendar}}
-{{/power-calendar-range}}
+>
+  <PowerCalendarYears @calendar={{calendar}} />
+</PowerCalendarRange>
 ```
 will work without further tweaking, as will `power-calendar-multiple`.
 
@@ -141,26 +151,26 @@ The `power-calendar-months` component renders with selectors for the 12 months i
 #### `fisrtQuarter`
 `firstQuarter` specifies the starting label of the first quarter. Defaults to `1`.
 ```hbs
-{{#power-calendar
-  selected=selected
-  onSelect=(action (mut selected) value="date") 
+<PowerCalendar
+  @selected={{selected}}
+  @onSelect={{action (mut selected) value="date"}}
   as |calendar|
-}}
-  {{power-calendar-months firstQuarter=2 calendar=calendar}}
-{{/power-calendar}}
+>
+  <PowerCalendarMonths @firstQuarter={{2}} @calendar={{calendar}} />
+</PowerCalendar>
 ```
 will render with the first quarter of the year as Q2.
 
 #### `showQuarters`
 Determines if the quarters should be rendered.  Defaults `true`.
 ```hbs
-{{#power-calendar
-  selected=selected
-  onSelect=(action (mut selected) value="date") 
+<PowerCalendar
+  @selected={{selected}}
+  @onSelect={{action (mut selected) value="date"}}
   as |calendar|
-}}
-  {{power-calendar-months showQuarters=false calendar=calendar}}
-{{/power-calendar}}
+>
+  <PowerCalendarMonths @showQuarters={{false}} @calendar={{calendar}} />
+</PowerCalendar>
 ```
 will not render with quarters, only months.
 
@@ -173,14 +183,14 @@ For example, `power-calendar-selectors-nav` can be used to  navigate by decade i
 month, convenient when using the years selector.  The `dateFormat` property can be used to 
 provide custom date format strings.  We use [moment.js format strings](https://momentjs.com/docs/#/parsing/string-formats/).
 ```hbs
-{{#power-calendar 
-  onCenterChange=(action (mut center) value="date")
-  center=center 
+<PowerCalendar 
+  @onCenterChange={{action (mut center) value="date"}}
+  @center={{center}}
   as |calendar|
-}}
-  {{power-calendar-selectors-nav dateFormat="Today is the Do of MMMM" calendar=calendar by="decade"}}
-  {{power-calendar-years calendar=calendar}}
-{{/power-calendar}}
+>
+  <PowerCalendarSelectorsNav @dateFormat="Today is the Do of MMMM" @calendar={{calendar}} @by="decade" />
+  <PowerCalendarYears @calendar={{calendar}} />
+</PowerCalendar>
 ```
 
 ### onSelect Handler
@@ -188,13 +198,13 @@ provide custom date format strings.  We use [moment.js format strings](https://m
 All default behaviors can be handled through the power-calendar `onSelect` handler hook, just as in base ember power calendar.  For instance,
 
 ```hbs
-{{#power-calendar-range 
-  onSelect=(action (mut selected)) 
-  selected=selected 
+<PowerCalendarRange 
+  @onSelect={{action (mut selected)}}
+  @selected={{selected}}
   as |cal|
-}}
-  {{power-calendar-months calendar=cal}}
-{{/power-calendar-range}}
+>
+  <PowerCalendarMonths @calendar={{cal}} />
+</PowerCalendarRange>
 ```
 
 Will now properly select the entire quarter range when a quarter is selected by the user.
@@ -203,15 +213,12 @@ Most users should have no issue using the default behavior provided by the ember
 
 In the case that the user desires to discriminate between month and quarter selections, the child `onSelect` can be leveraged.
 ```hbs
-{{#power-calendar-multiple
-  selected=selected 
-  as |cal|
-}}
-  {{power-calendar-months 
-    onSelect=(action "handleSelect")
-    calendar=cal
-  }}
-{{/power-calendar-multiple}}
+<PowerCalendarMultiple @selected={{selected}} as |cal|>
+  <PowerCalendarMonths 
+    @onSelect={{action "handleSelect"}}
+    @calendar={{cal}}
+  />
+</PowerCalendarMultiple>
 ```
 
 ```javascript
@@ -225,16 +232,18 @@ In the case that the user desires to discriminate between month and quarter sele
 
 In the case that both hooks are used all registered handlers fire in order of specificity.
 ```hbs
-{{#power-calendar-range 
-  onSelect=(action (mut selected)) <- fires second 
-  selected=selected 
+<PowerCalendarRange 
+  @onSelect={{action (mut selected)}}
+  {{!-- ^fires second --}}
+  @selected={{selected}}
   as |cal|
-}}
-  {{power-calendar-months 
-    onSelect=(action (mut selected)) <- fires first 
-    calendar=cal
-  }}
-{{/power-calendar-range}}
+>
+  <PowerCalendarMonths 
+    @onSelect={{action (mut selected)}}
+    {{!-- ^fires first --}}
+    @calendar={{cal}}
+  />
+</PowerCalendarRange>
 ```
 
 ## Contribute
